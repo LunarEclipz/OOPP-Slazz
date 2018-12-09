@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Survey</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="../static/style.css">
+</head>
+<body>
+<div class="container">
+
+    <div class="page-header">
+        <h1 id="SurveyHeader">Survey</h1>
+    </div>
+
+    <div class="jumbotron">
+        <h2>Insert Budget</h2>
+        <form>
+            <div class="form-group">
+                <label for="F&BInput">F&B Budget :</label>
+                <input type="number" class="form-control" id="F&BInput" aria-describedby="F&BHelp"
+                       placeholder="Enter budget" min="1">
+                <small id="F&BHelp" class="form-text text-muted">Budget on spent on food and drinks</small>
+            </div>
+            <hr>
+            <div class="form-group">
+                <label for="EssentialInput">Essential Budget :</label>
+                <input type="number" class="form-control" id="EssentialInput" aria-describedby="EssentialHelp"
+                       placeholder="Enter budget" min="1">
+                <small id="EssentialHelp" class="form-text text-muted">Budget on spent on essential</small>
+            </div>
+            <hr>
+            <div class="form-group">
+                <label for="LeisureInput">F&B Budget :</label>
+                <input type="number" class="form-control" id="LeisureInput" aria-describedby="LeisureHelp"
+                       placeholder="Enter budget" min="1">
+                <small id="LeisureHelp" class="form-text text-muted">Budget on spent on leisure</small>
+            </div>
+
+
+        </form>
+
+    </div>
+</div>
+</body>
+</html>
