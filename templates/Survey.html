@@ -1,47 +1,95 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Survey</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
-          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="../static/style.css">
-</head>
-<body>
-<div class="container">
-
-    <div class="page-header">
-        <h1 id="SurveyHeader">Survey</h1>
-    </div>
-
+{% extends 'layout.html' %}
+{% block content %}
+        <div class="page-header">
+            <h1 id="SurveyHeader">Survey</h1>
+        </div>
     <div class="jumbotron">
-        <h2>Insert Budget</h2>
-        <form>
+
+
+
+
+        <form method="POST" action="">
+        {{ form.hidden_tag() }}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Insert Budget</legend>
+
             <div class="form-group">
-                <label for="F&BInput">F&B Budget :</label>
-                <input type="number" class="form-control" id="F&BInput" aria-describedby="F&BHelp"
-                       placeholder="Enter budget" min="1">
-                <small id="F&BHelp" class="form-text text-muted">Budget on spent on food and drinks</small>
-            </div>
-            <hr>
-            <div class="form-group">
-                <label for="EssentialInput">Essential Budget :</label>
-                <input type="number" class="form-control" id="EssentialInput" aria-describedby="EssentialHelp"
-                       placeholder="Enter budget" min="1">
-                <small id="EssentialHelp" class="form-text text-muted">Budget on spent on essential</small>
-            </div>
-            <hr>
-            <div class="form-group">
-                <label for="LeisureInput">F&B Budget :</label>
-                <input type="number" class="form-control" id="LeisureInput" aria-describedby="LeisureHelp"
-                       placeholder="Enter budget" min="1">
-                <small id="LeisureHelp" class="form-text text-muted">Budget on spent on leisure</small>
+                {{ form.f_budget.label(class="form-control-label") }}
+
+                {% if form.f_budget.errors %}
+                {{ form.f_budget(class="form-control form-control-lg is-invalid") }}
+                 <div class="invalid-feedback">
+                            {% for error in form.f_budget.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                 </div>
+
+                {% else %}
+                    {{ form.f_budget(class="form-control form-control-lg") }}
+                {% endif %}
             </div>
 
+            <hr>
+
+
+       <div class="form-group">
+            {{ form.e_budget.label(class="form-control-label") }}
+
+            {% if form.e_budget.errors %}
+            {{ form.e_budget(class="form-control form-control-lg is-invalid") }}
+             <div class="invalid-feedback">
+                        {% for error in form.f_budget.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+             </div>
+
+            {% else %}
+                {{ form.e_budget(class="form-control form-control-lg") }}
+            {% endif %}
+   </div>
+
+
+            <hr>
+
+
+       <div class="form-group">
+            {{ form.l_budget.label(class="form-control-label") }}
+
+            {% if form.l_budget.errors %}
+            {{ form.l_budget(class="form-control form-control-lg is-invalid") }}
+             <div class="invalid-feedback">
+                        {% for error in form.l_budget.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+             </div>
+
+            {% else %}
+                {{ form.l_budget(class="form-control form-control-lg") }}
+            {% endif %}
+        </div>
+
+            <hr>
+       <div class="form-group">
+            {{ form.o_budget.label(class="form-control-label") }}
+
+            {% if form.o_budget.errors %}
+            {{ form.o_budget(class="form-control form-control-lg is-invalid") }}
+             <div class="invalid-feedback">
+                        {% for error in form.o_budget.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+             </div>
+
+            {% else %}
+                {{ form.o_budget(class="form-control form-control-lg") }}
+            {% endif %}
+        </div>
+        <br><br>
+            <div class="form-group">
+            {{ form.submit(class="btn btn-success btn-lg") }}
+            </div>
 
         </form>
 
     </div>
-</div>
-</body>
-</html>
+{% endblock content %}
