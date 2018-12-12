@@ -1,0 +1,45 @@
+{% extends 'finlayout.html' %}
+{% block content %}
+
+    <div class="page-header">
+        <h1 id="AdvisorHeader">Advisor</h1>
+    </div>
+
+    <div class="jumbotron">
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load("current", {packages:["corechart"]});
+      google.charts.setOnLoadCallback(drawChart);
+
+
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Department', 'Amount'],
+          {% for data in spending_data %}
+          ['{{data.Department}}', parseInt({{data.Amount}})],
+          {% endfor %}
+        ]);
+
+        var options = {
+          title: 'My Spendings',
+          pieHole: 0.4,
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
+        chart.draw(data, options);
+      }
+    </script>
+<div id="donutchart" style="width: 900px; height: 500px;"></div>
+        <h1>Budgets</h1>
+        {% for budget in budget_data%}
+        <h3>The Budget you set for {{budget}} is: {{budget_data[budget]}}<h3>
+        {% endfor %}
+        <hr>
+            <h1>Savings</h1>
+            <h3>You saved ${{f_b}} for Food and Beverages.</h3>
+            <h3>You saved ${{e_a}} for Essentials</h3>
+            <h3>You saved ${{l_a}} for Leisure</h3>
+            <h3>You saved ${{o_a}} for Others</h3>
+            <h3>You saved a total of ${{saved_total}}.</h3>
+    </div>
+{% endblock content %}
