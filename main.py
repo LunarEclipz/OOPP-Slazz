@@ -1,12 +1,57 @@
 from flask import Flask, render_template, url_for, flash, redirect
-from forms import SurveyForm
+from forms import SurveyForm, transfer_form, topup_form
 import data
+import Book, Due_date, Reminder
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '5791628bb0b13ce0c676dfde280ba245'
 
 
 @app.route('/')
+def index():
+    return render_template("home.html")
+
+
+@app.route('/about')
+def about():
+    return render_template("about.html")
+
+
+@app.route('/register')
+def register():
+    return render_template("register.html")
+
+
+@app.route('/login')
+def login():
+    return render_template("login.html")
+
+
+@app.route('/pay')
+def pay():
+    return render_template("pay.html", title="Pay")
+
+# Transfer Tab
+
+
+@app.route('/transfer')
+def transfer():
+    form1 = transfer_form()
+    form2 = topup_form()
+    return render_template("transfer.html", title="Transfer", form1=form1, form2=form2)
+
+
+@app.route('/transactions')
+def transactions():
+    return render_template("transactions.html", title="Transactios")
+
+
+@app.route('/add')
+def add():
+    return render_template("add.html", title="Add")
+
+
+@app.route('/Finance')
 def Financehome():
     return render_template("Finance.html", title='Finance')
 
@@ -54,6 +99,36 @@ def Activity():
     activities = data.get_activity()
 
     return render_template("Activity.html", title='Activity', activities=activities)
+
+
+@app.route('/library')
+def libraryhome():
+    return render_template("Library.html")
+
+
+@app.route('/Reminders')
+def reminders():
+    bk = ['Dante', 'Locker B']
+    books = Book.Book
+    reminder = Reminder.Reminder
+    return render_template("Reminders.html", books=books, reminder=reminder, bk=bk)
+
+
+@app.route('/Payment')
+def payment():
+    return render_template("Payment.html")
+
+
+@app.route('/RecommendedBooks')
+def recBooks():
+    return render_template("RecommendedBooks.html")
+
+
+@app.route('/BooksOnLoan')
+def loaned():
+    book = Book
+    duedate = Due_date
+    return render_template('BorrowedBooks.html', book=book, duedate=duedate)
 
 
 if __name__ == '__main__':

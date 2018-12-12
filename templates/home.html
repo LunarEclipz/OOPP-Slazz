@@ -1,0 +1,13 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+{% include 'carousel.html' %}
+
+  <div class="jumbotron text-center">
+    <h1>Welcome To SLAZZ</h1>
+    <p class="lead">Do more with your EZLink Card</p>
+    {% if session.logged_in == NULL %}
+      <a href="/register" class="btn btn-warning btn-lg">Sign Up Now!</a>
+    {% endif %}
+  </div>
+{% endblock %}
