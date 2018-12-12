@@ -5,8 +5,24 @@
     </div>
 
     <div class="jumbotron">
-    //Pychart Here
-    //Statments
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script type="text/javascript">
+    google.charts.load('current', {packages: ['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
 
+    function drawChart() {
+      // Define the chart to be drawn.
+             var data = google.visualization.arrayToDataTable([
+         ['Month', 'Amount', { role: 'style' }, { role: 'annotation' } ],
+         ['September', 40, 'blue', 'Sep' ],
+         ['October', 10, 'blue', 'Oct' ],
+         ['November', 20, 'blue', 'Nov' ],
+         ['December', 40, 'blue', 'Dec' ]
+      ]);
+      var chart = new google.visualization.ColumnChart(document.getElementById('mySavingsChart'));
+      chart.draw(data, null);
+    }
+  </script>
+          <div id="mySavingsChart"/>
     </div>
 {% endblock content %}
