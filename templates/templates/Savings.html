@@ -1,0 +1,29 @@
+{% extends 'layout.html' %}
+{% block content %}
+    <div class="page-header">
+        <h1 id="SavingsHeader">Savings</h1>
+    </div>
+
+    <div class="jumbotron">
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script type="text/javascript">
+    google.charts.load('current', {packages: ['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+      // Define the chart to be drawn.
+             var data = google.visualization.arrayToDataTable([
+         ['Month', 'Amount', { role: 'style' }, { role: 'annotation' } ],
+
+         {% for data in saved_data %}
+         ['{{data.Month}}', parseInt({{data.Amount}}), 'blue', '{{data.Anno}}' ],
+         {% endfor %}
+
+      ]);
+      var chart = new google.visualization.ColumnChart(document.getElementById('mySavingsChart'));
+      chart.draw(data, null);
+    }
+  </script>
+          <div id="mySavingsChart"/>
+    </div>
+{% endblock content %}
