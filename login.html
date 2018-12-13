@@ -1,0 +1,27 @@
+{% extends 'layout.html' %}
+
+<link rel="stylesheet" href="/static/style.css">
+
+{% block body %}
+{%  from "includes/_formhelpers.html" import render_field %}
+
+<section class="content">
+  <header>
+
+  <h1>Log In</h1>
+
+  </header>
+  {% for message in get_flashed_messages() %}
+    <div class="flash">{{ message }}</div>
+  {% endfor %}
+
+  <form method="post" action="/login">
+    {{ render_field(form.id, class_='form-control') }}
+    {{ render_field(form.password, class_='form-control') }}
+    <br>
+    <button type="submit" class="btn btn-warning">{{ form.submit }}</button>
+
+  </form>
+
+</section>
+{% endblock %}
