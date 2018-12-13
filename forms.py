@@ -1,6 +1,7 @@
 from flask_wtf import FlaskForm
-from wtforms import FloatField, SubmitField, StringField
+from wtforms import FloatField, SubmitField, StringField, PasswordField, Form
 from wtforms.validators import DataRequired, NumberRange, Length, EqualTo
+from wtforms import validators
 
 
 class SurveyForm(FlaskForm):
@@ -23,3 +24,15 @@ class topup_form(FlaskForm):
     pin = StringField("Bank Account Pin:", validators=[DataRequired(), Length(max=10)])
     confirm_pin = StringField("Confirm Bank Account Pin:", validators=[DataRequired(), EqualTo("pin ")])
     submit = SubmitField("Confirm")
+
+
+class LoginForm(Form):
+    id = StringField('UserName', [validators.DataRequired('Please enter your name.')])
+    password = PasswordField('Password', [validators.DataRequired('Please enter your password.')])
+    submit = SubmitField('Login')
+
+
+class RegisterForm(Form):
+    id = StringField('UserName', [validators.DataRequired('Please enter your name.')])
+    password = PasswordField('Password', [validators.DataRequired('Please enter your password.')])
+    submit = SubmitField('Register')

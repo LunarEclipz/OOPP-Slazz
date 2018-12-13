@@ -1,30 +1,87 @@
-from flask import Flask, render_template, url_for, flash, redirect
-from forms import SurveyForm, transfer_form, topup_form
+from flask import *
+from forms import SurveyForm, transfer_form, topup_form, LoginForm, RegisterForm
 import data
+from user import *
 import Book, Due_date, Reminder
+from functools import wraps
+
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '5791628bb0b13ce0c676dfde280ba245'
+app.config.from_mapping(
+    SECRET_KEY='dev'
+)
 
 
 @app.route('/')
-def index():
-    return render_template("home.html")
+def home():
+    return render_template('home.html')
 
 
 @app.route('/about')
 def about():
-    return render_template("about.html")
+    return render_template('about.html')
 
 
-@app.route('/register')
-def register():
-    return render_template("register.html")
+@app.route('/loggedin')
+def loggedin():
+    return render_template('loggedin.html')
 
 
-@app.route('/login')
+#User Login
+@app.route('/login',  methods=('GET', 'POST'))
 def login():
-    return render_template("login.html")
+    login_form = LoginForm(request.form)
+    if request.method == 'POST':
+        user = get_user(login_form.id.data, login_form.password.data)
+        if user is None:
+            error = 'Incorrect username and/or password'
+        else:
+            session['logged_in'] = True
+            session['username'] = user.username
+
+            flash('You are now logged in','success')
+            return render_template('loggedin.html')
+
+        flash(error)
+    return render_template('login.html', form=login_form)
+
+
+
+#Register
+@app.route('/register', methods=('GET', 'POST'))
+def register():
+    form = RegisterForm(request.form)
+    if request.method == 'POST':
+        username = form.id.data
+        password = form.password.data
+        if not username:
+            error = 'Username is required.'
+        elif not password:
+            error = 'Password is required.'
+        else:
+            create_user(username, password)
+            flash('You are now registered and can log in', 'success')
+            return redirect(url_for('login'))
+        flash(error)
+    return render_template('register.html', form=form)
+
+
+def is_logged_in(f):
+    @wraps(f)
+    def wrap(*args, **kwargs):
+        if 'logged_in' in session:
+            return f(*args, **kwargs)
+        else:
+            flash('Unauthorized, Please login', 'danger')
+            return redirect(url_for('login'))
+    return wrap
+
+
+@app.route('/logout', methods=('GET', 'POST'))
+def logout():
+    session.clear()
+    return redirect(url_for('login'))
 
 
 @app.route('/pay')

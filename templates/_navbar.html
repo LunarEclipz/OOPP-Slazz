@@ -1,31 +1,29 @@
+
 <nav class="navbar navbar-expand-md navbar-inverse bg-dark">
       <div class="container">
         <div class="navbar-header">
-          <a class="text-warning navbar-brand" href="/">SLAZZ</a>
+          <a class="text-warning navbar-brand" href="/"><style>color:yellow;</style>SLAZZ</a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
             <li><a href="/">Home</a></li>
             <li><a href="/about">About</a></li>
-              <li><a href="/pay">Pay</a></li>
-              <li><a href="/Finance">Finance</a></li>
-              <li><a href="/library">Your Library</a></li>
-              <li><a href="/travel">Your Travels</a></li>
-              <li><a href="/">Logout</a></li>
           </ul>
 
-          <!--<ul class="nav navbar-nav navbar-right">-->
-            <!--&lt;!&ndash;{% if session.logged_in %}&ndash;&gt;-->
-              <!--&lt;!&ndash;<li><a href="/pay">Pay</a></li>&ndash;&gt;-->
-              <!--&lt;!&ndash;<li><a href="/Finace">Finance</a></li>&ndash;&gt;-->
-              <!--&lt;!&ndash;<li><a href="/library">Your Library</a></li>&ndash;&gt;-->
-              <!--&lt;!&ndash;<li><a href="/travel">Your Travels</a></li>&ndash;&gt;-->
-              <!--&lt;!&ndash;<li><a href="/logout">Logout</a></li>&ndash;&gt;-->
-            <!--&lt;!&ndash;{% else %}&ndash;&gt;-->
-              <!--&lt;!&ndash;<li><a href="/register">Register</a></li>&ndash;&gt;-->
-              <!--&lt;!&ndash;<li><a href="/login">Login</a></li>&ndash;&gt;-->
-            <!--&lt;!&ndash;{% endif %} &ndash;&gt;-->
-          <!--</ul>-->
-        </div><!--/.nav-collapse -->
+          <ul class="nav navbar-nav navbar-right">
+            {% if session.logged_in %}
+
+              <li><a href="/transfer">Pay</a></li>
+              <li><a href="/Finance">Finance</a></li>
+              <li><a href="/library">Your Library</a></li>
+              <li><a href="/loggedin">Profile Page</a></li>
+              <li><a href="/logout">Logout</a></li>
+            {% else %}
+              <li><a href="/register">Register</a></li>
+              <li><a href="/login">Login</a></li>
+            {% endif %}
+
+          </ul>
+        </div>
       </div>
     </nav>
