@@ -1,0 +1,84 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="container">
+        <ul class="nav nav-tabs">
+            <li><a data-toggle="tab" href="#pay"><span class="glyphicon glyphicon-usd"> PAY </span></a></li>
+            <li class="active"><a data-toggle="tab" href="#transfer"><span class="glyphicon glyphicon-send"> TRANSFER </span></a></li>
+            <li><a data-toggle="tab" href="#transactions"><span class="glyphicon glyphicon-piggy-bank"> TRANSACTIONS </span></a></li>
+            <li><a data-toggle="tab" href="#add"><span class="glyphicon glyphicon-plus-sign"> ADD </span></a></li>
+        </ul>
+
+        <div class="tab-content">
+            <div id="pay" class="tab-pane fade">
+                <h3> Pay </h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            </div>
+            <div id="transfer" class="tab-pane fade in active">
+                <h3> Transfer </h3>
+                <div class="container">
+                    <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#payee" >Transfer</button>
+                    <div id="payee" class="collapse">
+                        <div class="content-section">
+                            <form method="POST" action="">
+                                {{ form1.hidden_tag() }}
+                            <fieldset class="form-group">
+                                <legend class="border bottom mb-4">Transfer Ezlink Payee</legend>
+                                <div class="form-group">
+                                    {{ form1.payee.label(class="form-control-lable") }}
+                                    {{ form1.payee(class="form-control form-control-lg") }}
+                                </div>
+                                <div class="form-group">
+                                    {{ form1.amount.label(class="form-control-lable") }}
+                                    {{ form1.amount(class="form-control form-control-lg") }}
+                                </div>
+                                <div class="form-group">
+                                    {{ form1.submit.label(class="btn btn-outline-info") }}
+                                </div>
+                            </fieldset>
+                            </form>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#topup" > Top-up </button>
+                    <div id="topup" class="collapse">
+                        <div class="content-section">
+                            <form method="POST" action="">
+                                {{ form2.hidden_tag() }}
+                            <fieldset class="form-group">
+                                <legend class="border bottom mb-4">Top-up Ezlink Card</legend>
+                                <div class="form-group">
+                                    {{ form2.topup.label(class="form-control-lable") }}
+                                    {{ form2.topup(class="form-control form-control-lg") }}
+                                </div>
+                                <div class="form-group">
+                                    {{ form2.amount.label(class="form-control-lable") }}
+                                    {{ form2.amount(class="form-control form-control-lg") }}
+                                </div>
+                                <div class="form-group">
+                                    {{ form2.pin.label(class="form-control-lable") }}
+                                    {{ form2.pin(class="form-control form-control-lg") }}
+                                </div>
+                                <div class="form-group">
+                                    {{ form2.confirm_pin.label(class="form-control-lable") }}
+                                    {{ form2.confirm_pin(class="form-control form-control-lg") }}
+                                </div>
+                                <div class="form-group">
+                                    {{ form2.submit.label(class="btn btn-outline-info") }}
+                                </div>
+                            </fieldset>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="transactions" class="tab-pane fade">
+                <h3> Transactions </h3>
+                <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
+            </div>
+            <div id="add" class="tab-pane fade">
+                <h3> Add </h3>
+                <p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+            </div>
+        </div>
+
+    </div>
+{% endblock content %}

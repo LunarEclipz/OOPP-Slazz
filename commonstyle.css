@@ -1,0 +1,28 @@
+* {
+  font-family: fibon sans regular;
+}
+
+.container {
+  margin-top: 50px;
+}
+
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover {
+  color: #ffcc00;
+  cursor: default;
+  background-color: #fff;
+  border: 1px solid #66ccff;
+  border-bottom-color: transparent;
+}
+
+.nav-tabs {
+  border-bottom: 1px solid #66ccff;
+}
+
+h3 {
+  text-align: center;
+  color: #ffcc00;
+}
+
+p {
+  color: #337ab7;
+}
