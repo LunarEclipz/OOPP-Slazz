@@ -1,46 +1,41 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Library</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="../static/style.css">
-    <style>
+{% extends 'Layout.html' %}
 
-</style>
-</head>
-<body>
+{% block body %}
 <div class="container">
     <div class="page-header">
         <h1 id="libraryHeader">Library</h1>
     </div>
     <div class="jumbotron">
-    <div class="slider1">
+        <div class="slider1">
         <h3>Welcome to the Library!</h3>
         <p>Recommended Books, Reminders, and Payment services available</p>
-    </div>
-    <div class="slider2">
-        <h3>Recommended books</h3>
-        <p>Based on your recent reads</p>
-        <a id="recBooksPageButton" href="RecommendedBooks.html" class="btn btn-primary btn-lg" role="button">Click here</a>
-    </div>
-    <div class="slider3">
-        <h3>Reminders</h3>
-        <p>Never get fined again!</p>
-        <a id="remindersPageButton" href="Reminders.html" class="btn btn-warning btn-lg" role="button">Click here</a>
-    </div>
-    <div class="slider4">
-        <h3>Payment</h3>
-        <p>Simply pay your outstanding balance with a tap!</p>
-        <a id="paymentPageButton" href="Payment.html" class="btn btn-danger btn-lg" role="button">Click here</a>
-    </div>
-    <h2>What is Library about?</h2>
+        </div>
+        <h2>What is Library about?</h2>
     <p>Library is an system designed to relieve book lovers of the pain of scouring the web to find a good read, to give
     a wake up call when a book is near is due date, and to give the gift of convenience by simplifying payment of overdue
     fines to a tap of your finger.</p>
     </div>
+
+       <div class="slider2">
+        <h3>Books currently on loan</h3>
+        <p>What you have borrowed and renewal services.</p>
+        <a id="borrowedBooksPageButton" href="{{ url_for('loaned') }}" class="btn btn-danger btn-lg" role="button">Click here</a>
+    </div>
+    <div class="slider2">
+        <h3>Recommended books</h3>
+        <p>Based on your recent reads</p>
+        <a id="recBooksPageButton" href="{{ url_for('recBooks') }}" class="btn btn-primary btn-lg" role="button">Click here</a>
+    </div>
+    <div class="slider3">
+        <h3>Reminders</h3>
+        <p>Never get fined again!</p>
+        <a id="remindersPageButton" href="{{ url_for('reminders') }}" class="btn btn-warning btn-lg" role="button">Click here</a>
+    </div>
+    <div class="slider4">
+        <h3>Payment</h3>
+        <p>Simply pay your outstanding balance with a tap!</p>
+        <a id="paymentPageButton" href="{{ url_for('payment') }}" class="btn btn-danger btn-lg" role="button">Click here</a>
+    </div>
+
 </div>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-</body>
-</html>
+{% endblock %}
