@@ -7,7 +7,32 @@
     </div>
     <div class="jumbotron">
     <p>See what books you have on loan, and renew them here.</p>
-    <p>{{ duedate }}</p>
+    {# Table of books on loan. If no books on loan, table does not show #}
+    <h3>Current Loans</h3>
+    {% if 'Bob' in bdb %}
+    <table border="1" cellpadding="3">
+    <thead>
+        <tr>
+            <th>Title of Book</th>
+            <th>Genre</th>
+            <th>Loan Date</th>
+            <th>Due Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for i in bdb['Bob']  %}
+        <tr>
+            <td>{{ i.title }}</td>
+            <td>{{ i.genre }}</td>
+            <td>{{ i.date_borrowed }}</td>
+            <td>{{ i.due_date }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    </table>
+    {% else %}
+        <h3>You currently have no books on loan.</h3>
+    {% endif %}
 <div class="form-group">
     <form method="POST" action="{{ url_for('booksubmit') }}">
         <div class="form-group">
@@ -27,18 +52,38 @@
         <input id='bookSubmit' type="submit" class="btn btn-warning">
     </form>
 </div>
+    {# renew books in form below #}
    <h2>Renew your books here</h2><br>
-    <form method="GET" action="{{ url_for('booksubmit') }}">
         <div class="form-group">
-            <label for="renewBooks">Title of book:</label><br>
-            <select id='renewBooks' name="renewBooks">
-                {% for i in db['Bob'] %}
-                <option value="{{ i.title }}">{{ i.title }}</option>
-                {% endfor %}
-            </select><br>
+            <form method="POST" action="{{ url_for('renewSubmit') }}">
+                <div class="form-group">
+                    <label for="renewBooks">Title of book:</label><br>
+                    <select id='renewBooks' name="renewBooks">
+                    {# replace 'Bob' with the user #}
+                        {% for i in bdb['Bob'] %}
+                        <option value="{{ i.title }}">{{ i.title }}</option>
+                        {% endfor %}
+                    </select><br>
+                </div>
+                <input id='renewSubmit' type="submit" class="btn btn-warning">
+            </form>
         </div>
-        <input id='renewSubmit' type="submit" class="btn btn-warning">
-    </form>
+    {# return books in form below #}
+    <h2>Return your books here</h2><br>
+        <div class="form-group">
+            <form method="POST" action="{{ url_for('returnSubmit') }}">
+                <div class="form-group">
+                    <label for="returnBook">Title of book:</label><br>
+                    <select id='returnBook' name="returnBook">
+                    {# replace 'Bob' with the user #}
+                        {% for i in bdb['Bob'] %}
+                        <option value="{{ i.title }}">{{ i.title }}</option>
+                        {% endfor %}
+                    </select><br>
+                </div>
+                <input id='returnSubmit' type="submit" class="btn btn-warning">
+            </form>
+        </div>
     </div>
 </div>
 {% endblock %}

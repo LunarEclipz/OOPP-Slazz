@@ -19,12 +19,15 @@ class Reminder(Book.Book):
 
     def set_book(self, username, bookname):
         db = shelve.open('BookDatabase.db')
-        for i in db[username]:
-            if i.title == bookname:
-                self.bookname = bookname
-                self.__class__.bookcount += 1
-            else:
-                continue
+        if username in db.keys():
+            for i in db[username]:
+                if i.title == bookname:
+                    self.bookname = bookname
+                    self.__class__.bookcount += 1
+                else:
+                    continue
+        else:
+            return 'There is no user named', username
         db.close()
 
     def get_date(self):

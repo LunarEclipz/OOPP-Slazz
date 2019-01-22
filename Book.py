@@ -13,7 +13,6 @@ class Book:
         self.genre = ''
         self.date_borrowed = 0
         self.due_date = 0
-        self.renewed_due_date = 0
         self.reminder = 0
 
     def get_title(self):
@@ -54,7 +53,7 @@ class Book:
             self.due_date = date_borrowed + dt.timedelta(days=14)
 
     def book_renewal(self):
-        self.renewed_due_date = self.due_date + dt.timedelta(days=14)
+        self.due_date += dt.timedelta(days=14)
         self.__class__.renewCount += 1
 
     def set_reminder(self, reminder):

@@ -6,18 +6,20 @@
     <h1 id="remindersHeader">Reminders</h1>
     </div>
     <div class="jumbotron">
-    <p>Set reminders for your books here. We will inform you with a notification or email, or even both! The choice
-     is up to you.</p>
+    <p>Set reminders for your books here. We will inform you with a notification and/or email.</p>
     {% if 'Bob' in bdb.keys() %}
-    <form method="post">
+    <form method="POST" action="{{ url_for('reminderSubmit') }}">
         Title of Book:<br>
-        <select id='books' name="books">
+        <select id='books' name="books" required>
             {% for i in bdb['Bob'] %}
             <option value="{{ i.title }}">{{ i.title }}</option>
             {% endfor %}
         </select><br>
         <label for="RemindDate">Date of reminder:</label><br>
-        <input id="RemindDate" name="RemindDate" type="date"><br>
+        <input id="RemindDate" name="RemindDate" type="date" value="{{ books.today_date() }}"
+               min="{{ books.today_date() }}" required><br>
+        <label for="emailReminder">Email your reminder to:</label>
+        <input type="email" id='emailReminder' name="emailReminder"><br>
         <input type="submit">
     </form>
         <table border="1" cellpadding="2">
@@ -34,8 +36,9 @@
                 {% if i.renewCount == 0 %}
                 <td>-</td>
                 {% else %}
-                <td>{{ i.renewed.due.date }}</td>
+                <td>{{ i.renewed_due_date }}</td>
                 {% endif %}
+                <td>{{ i.reminder.date }}</td>
             </tr>
             {% endfor %}
         </table>

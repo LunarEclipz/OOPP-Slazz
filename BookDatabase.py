@@ -50,7 +50,7 @@ def extractBook(username, bookname):
         if db[username][i].title == bookname:
             return db[username][i]
         else:
-            continue
+            pass
     db.close()
 
 
@@ -63,19 +63,31 @@ def deleteUser(username):
 
 # deletes a book from a user key
 def deleteBook(username, bookname):
-    db = shelve.open('bookLoans.db')
+    db = shelve.open('bookLoans.db', writeback=True)
+    loopcount = 0
     try:
         temp = db[username]
-        for i in range(len(temp)):
-            if temp[i].title == bookname:
-                temp.pop(i)
+        for i in temp:
+            if i.title == bookname:
+                temp.pop(loopcount)
                 db[username] = temp
             else:
-                continue
+                loopcount += 1
+                pass
     except KeyError:
         print('There is no user named', username, '.')
     else:
         print('There is no book named', bookname, '.')
+    db.close()
+
+
+def renewBook(username, bookname):
+    db = shelve.open('bookLoans.db', writeback=True)
+    for i in db[username]:
+        if i.title == bookname:
+            i.book_renewal()
+        else:
+            pass
     db.close()
 
 
@@ -89,13 +101,11 @@ def showBookTitles(username):
 
 # reminder is an instance of the class Reminder
 def store_reminder(username, reminder, bookname):
-    db = shelve.open('bookLoans.db')
-    for i in range(len(db[username])):
-        if db[username][i] == bookname:
-            temp = db[username]
-            temp[i].reminder = reminder
-            db[username] = temp
+    db = shelve.open('bookLoans.db', writeback=True)
+    for i in db[username]:
+        if i.title == bookname:
+            i.reminder = reminder
         else:
-            continue
+            pass
     db.close()
 

@@ -3,8 +3,10 @@
 {% block body %}
 <div class="container">
     <div class="page-header">
-        Book submit success!
+        Book return success!
     </div>
+<div class="jumbotron">
+<p>Book returned: {{ result['returnBook'] }}</p>
 <h3>Current Loans</h3>
     <table border="1" cellpadding="3">
     <thead>
@@ -45,6 +47,7 @@
         {% endfor %}
     </tbody>
     </table>
+</div>
     <button><a href="{{ url_for('loaned') }}">Back to Books On Loan</a></button>
 </div>
 {% endblock %}

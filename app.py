@@ -5,6 +5,7 @@ import BookDatabase
 import shelve
 import datetime
 
+# replace all 'Bob's with username
 app = Flask(__name__)
 
 
@@ -15,11 +16,10 @@ def libraryhome():
 
 @app.route('/Reminders')
 def reminders():
-    bk = ['Dante', 'Locker B']
-    books = Book.Book
+    books = Book
     reminder = Reminder.Reminder
     bdb = shelve.open('bookLoans.db')
-    return render_template("Reminders.html", books=books, reminder=reminder, bk=bk, bdb=bdb)
+    return render_template("Reminders.html", books=books, reminder=reminder, bdb=bdb)
 
 
 @app.route('/Payment')
@@ -42,7 +42,8 @@ def loaned():
               'Poetry', 'Political Thriller', 'Prayer', 'Psychology', 'Religion', 'Review', 'Romance', 'Satire',
               'Sci-fi', 'Self Help', 'Suspense', 'Textbook', 'Thriller', 'Travel', 'Young Adult']
     db = BookDatabase
-    return render_template('BorrowedBooks.html', book=book, genres=genres, db=db)
+    bdb = shelve.open('bookLoans.db')
+    return render_template('BorrowedBooks.html', book=book, bdb=bdb, genres=genres, db=db)
 
 
 @app.route('/BookSubmitSuccess', methods=['POST', 'GET'])
@@ -63,17 +64,41 @@ def booksubmit():
         return render_template("BookSubmit.html", result=result, db=db, bdb=bdb)
 
 
-@app.route('/ReminderSubmit')
+@app.route('/ReminderSubmit', methods=['GET', 'POST'])
 def reminderSubmit():
-    result = request.form
-    book = result['books']
-    remindDate = result['RemindDate']
-    db = BookDatabase
-    remindDate2 = datetime.datetime.strftime(remindDate, '%Y-%m-%d')
-    reminder = Reminder.Reminder('Bob', remindDate2)
-    reminder.set_book('Bob', book)
+    if request.method == 'POST':
+        result = request.form
+        bookname = result['books']
+        remindDate = result['RemindDate']
+        db = BookDatabase
+        remindDate2 = datetime.datetime.strptime(remindDate, '%Y-%m-%d').date()
+        # replace all 'Bob's with username
+        reminder = Reminder.Reminder('Bob', remindDate2)
+        reminder.set_book('Bob', bookname)
+        db.store_reminder('Bob', reminder, bookname)
+        return render_template('ReminderSubmit.html', result=result, db=db)
 
-    return render_template('ReminderSubmit.html', db=db)
+
+@app.route('/RenewSubmit', methods=['GET', 'POST'])
+def renewSubmit():
+    if request.method == 'POST':
+        result = request.form
+        book = result['renewBooks']
+        db = BookDatabase
+        db.renewBook('Bob', book)
+        bdb = shelve.open('bookLoans.db')
+        return render_template('RenewSubmit.html', result=result, db=db, bdb=bdb)
+
+
+@app.route('/ReturnSubmit', methods=['GET', 'POST'])
+def returnSubmit():
+    if request.method == 'POST':
+        result = request.form
+        book = result['returnBook']
+        db = BookDatabase
+        db.deleteBook('Bob', book)
+        bdb = shelve.open('bookLoans.db')
+        return render_template('ReturnSubmit.html', result=result, db=db, bdb=bdb)
 
 
 if __name__ == '__main__':
