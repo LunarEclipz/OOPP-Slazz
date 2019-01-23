@@ -1,0 +1,50 @@
+{% extends 'Layout.html' %}
+
+{% block body %}
+<div class="container">
+    <div class="page-header">
+        Book submit success!
+    </div>
+<h3>Current Loans</h3>
+    <table border="1" cellpadding="3">
+    <thead>
+        <tr>
+            <th>Title of Book</th>
+            <th>Genre</th>
+            <th>Loan Date</th>
+            <th>Due Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for i in bdb['Bob']  %}
+        <tr>
+            <td>{{ i.title }}</td>
+            <td>{{ i.genre }}</td>
+            <td>{{ i.date_borrowed }}</td>
+            <td>{{ i.due_date }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    </table>
+<h3>Log of All Loans (Current and Previous loans)</h3>
+    <table border="1" cellpadding="3">
+    <thead>
+        <tr>
+            <th>Title of Book</th>
+            <th>Genre</th>
+            <th>Loan Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for i in bdb['BobLOGBOOK']  %}
+        <tr>
+            <td>{{ i.title }}</td>
+            <td>{{ i.genre }}</td>
+            <td>{{ i.date_borrowed }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    </table>
+    <button><a href="{{ url_for('loaned') }}">Back to Books On Loan</a></button>
+</div>
+{% endblock %}

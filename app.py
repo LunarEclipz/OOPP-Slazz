@@ -24,12 +24,24 @@ def reminders():
 
 @app.route('/Payment')
 def payment():
-    return render_template("Payment.html")
+    today = datetime.datetime.strptime(Book.today_date(), '%Y-%m-%d').date()
+    bdb = shelve.open('bookLoans.db')
+    return render_template("Payment.html", today=today, bdb=bdb)
 
 
 @app.route('/RecommendedBooks')
 def recBooks():
-    return render_template("RecommendedBooks.html")
+    bdb = shelve.open('bookLoans.db')
+    book1Gen = ''
+    rl = []
+    if 'BobLOGBOOK' in bdb:
+        book1Gen = bdb['BobLOGBOOK'][-1].genre
+        for i in range(len(bdb['BobLOGBOOK'])-1, -1, -1):
+            rl.append(bdb['BobLOGBOOK'][i].title)
+    else:
+        pass
+    rdb = shelve.open('bookRecommendations')
+    return render_template("RecommendedBooks.html", bdb=bdb, rdb=rdb, book1Gen=book1Gen, rl=rl)
 
 
 @app.route('/BooksOnLoan')

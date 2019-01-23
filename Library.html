@@ -1,0 +1,41 @@
+{% extends 'Layout.html' %}
+
+{% block body %}
+<div class="container">
+    <div class="page-header">
+        <h1 id="libraryHeader">Library</h1>
+    </div>
+    <div class="jumbotron">
+        <div class="slider1">
+        <h3>Welcome to the Library!</h3>
+        <p>Recommended Books, Reminders, and Payment services available</p>
+        </div>
+        <h2>What is Library about?</h2>
+    <p>Library is an system designed to relieve book lovers of the pain of scouring the web to find a good read, to give
+    a wake up call when a book is near is due date, and to give the gift of convenience by simplifying payment of overdue
+    fines to a tap of your finger.</p>
+    </div>
+
+       <div class="slider2">
+        <h3>Books currently on loan</h3>
+        <p>What you have borrowed and renewal services.</p>
+        <a id="borrowedBooksPageButton" href="{{ url_for('loaned') }}" class="btn btn-danger btn-lg" role="button">Click here</a>
+    </div>
+    <div class="slider2">
+        <h3>Recommended books</h3>
+        <p>Based on your recent reads</p>
+        <a id="recBooksPageButton" href="{{ url_for('recBooks') }}" class="btn btn-primary btn-lg" role="button">Click here</a>
+    </div>
+    <div class="slider3">
+        <h3>Reminders</h3>
+        <p>Never get fined again!</p>
+        <a id="remindersPageButton" href="{{ url_for('reminders') }}" class="btn btn-warning btn-lg" role="button">Click here</a>
+    </div>
+    <div class="slider4">
+        <h3>Payment</h3>
+        <p>Simply pay your outstanding balance with a tap!</p>
+        <a id="paymentPageButton" href="{{ url_for('payment') }}" class="btn btn-danger btn-lg" role="button">Click here</a>
+    </div>
+
+</div>
+{% endblock %}

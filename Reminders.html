@@ -1,0 +1,50 @@
+{% extends 'Layout.html' %}
+
+{% block body %}
+<div class="container">
+    <div class="page-header">
+    <h1 id="remindersHeader">Reminders</h1>
+    </div>
+    <div class="jumbotron">
+    <p>Set reminders for your books here. We will inform you with a notification and/or email.</p>
+    {% if 'Bob' in bdb.keys() %}
+    <form method="POST" action="{{ url_for('reminderSubmit') }}">
+        Title of Book:<br>
+        <select id='books' name="books" required>
+            {% for i in bdb['Bob'] %}
+            <option value="{{ i.title }}">{{ i.title }}</option>
+            {% endfor %}
+        </select><br>
+        <label for="RemindDate">Date of reminder:</label><br>
+        <input id="RemindDate" name="RemindDate" type="date" value="{{ books.today_date() }}"
+               min="{{ books.today_date() }}" required><br>
+        <label for="emailReminder">Email your reminder to:</label>
+        <input type="email" id='emailReminder' name="emailReminder"><br>
+        <input type="submit">
+    </form>
+        <table border="1" cellpadding="2">
+            <tr>
+                <th>Title</th>
+                <th>Due Date</th>
+                <th>Date of reminder</th>
+            </tr>
+            {% for i in bdb['Bob'] %}
+            <tr>
+                <td>{{ i.title }}</td>
+                <td>{{ i.due_date }}</td>
+                {% if i.reminder != 0 %}
+                    <td>{{ i.reminder.date }}</td>
+                {% else %}
+                    <td>-</td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <h3>You currently do not have any books on loan.</h3>
+    {% endif %}
+
+    </div>
+
+</div>
+{% endblock %}

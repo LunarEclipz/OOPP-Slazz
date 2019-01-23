@@ -1,0 +1,33 @@
+{% extends 'Layout.html' %}
+
+{% block body %}
+<div class="container">
+    <div class="page-header">
+    <h1 id="recBooksHeader">Recommended Books just for you</h1>
+    </div>
+    <div class="jumbotron">
+    <h2>Your recent loans</h2>
+        <div class="column">
+            <div class="recentLoans">
+            {% if 'BobLOGBOOK' in bdb %}
+                {% for i in range(4) %}
+                    <p>{{ rl[i] }}</p><br>
+                {% endfor %}
+            {% else %}
+                <p>You do not have any recent loans.</p>
+            {% endif %}
+            </div>
+        </div>
+    <h2>Based on your recent reads</h2>
+        <div class="column">
+         {% if 'BobLOGBOOK' in bdb %}
+            {% for i in rdb[book1Gen] %}
+                <p>{{ i }}</p><br>
+            {% endfor %}
+        {% else %}
+            <p>Loan books to get book recommendations.</p>
+        {% endif %}
+        </div>
+    </div>
+    </div>
+{% endblock %}

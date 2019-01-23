@@ -1,0 +1,22 @@
+{% extends 'Layout.html' %}
+
+{% block body %}
+<div class="container">
+    <div class="page-header">
+        <h1 id="paymentHeader">Payment</h1>
+    </div>
+    <div class="jumbotron">
+    <p>Pay off your outstanding balance simply with a tap of your finger!</p>
+
+            <p>Amount payable: -</p>
+
+    <div class="form-group">
+    <form method="GET" action="{{ url_for('booksubmit') }}">
+        <label for="payAmt">Enter amount to be deducted from amount payable:</label><br>
+       <input id="payAmt" type="number"><br>
+        <input type="submit" class="btn btn-warning">
+    </form>
+</div>
+    </div>
+ </div>
+{% endblock %}
