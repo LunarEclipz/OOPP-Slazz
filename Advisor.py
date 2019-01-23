@@ -2,7 +2,7 @@ class Finance:
     __budget = ''
     __expenditure = ''
 
-    def __init__(self, budget, expenditure):
+    def __init__(self, expenditure, budget):
         self.__budget = budget
         self.__expenditure = expenditure
 
@@ -19,37 +19,39 @@ class Finance:
         self.__expenditure = expenditure
 
 
-class Departments(Finance):
-    __individual_savings = ''
-    __name = ''
-
-    def __init__(self, name, budget, expenditure, indi):
-        Finance.__init__(self, budget, expenditure)
+class Food(Finance):
+    def __init__(self, expenditure, budget=0.2, name='Food'):
+        super().__init__(expenditure, budget)
         self.__name = name
-        self.__individual_savings = indi
-
-    def get_indi(self):
-        return self.__individual_savings
-    
-    def set_indi(self, indi):
-        self.__individual_savings = indi
 
     def get_name(self):
         return self.__name
 
-    def set_name(self, name):
+
+class Leisure(Finance):
+    def __init__(self, expenditure, budget=0.4, name='Leisure'):
+        super().__init__(expenditure, budget)
         self.__name = name
 
+    def get_name(self):
+        return self.__name
 
-class User(Finance):
-    __total_savings = ''
 
-    def __init__(self, budget, expenditure, total):
-        Finance.__init__(self, budget, expenditure)
-        self.__total = total
+class Essentials(Finance):
+    def __init__(self, expenditure, budget=0.3, name='Essentials'):
+        super().__init__(expenditure, budget)
+        self.__name = name
 
-    def get_total(self):
-        return self.__total
+    def get_name(self):
+        return self.__name
 
-    def set_total(self, total):
-        self.__total = total
+
+class Others(Finance):
+    def __init__(self, expenditure, budget=0.1, name='Others'):
+        super().__init__(expenditure, budget)
+        self.__name = name
+
+    def get_name(self):
+        return self.__name
+
+

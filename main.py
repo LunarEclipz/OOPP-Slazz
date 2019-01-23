@@ -1,9 +1,11 @@
 from flask import *
 from forms import SurveyForm, transfer_form, topup_form, LoginForm, RegisterForm
 import data
+import activity
 from user import *
 import Book, Due_date, Reminder
 from functools import wraps
+import activities
 
 
 app = Flask(__name__)
@@ -45,7 +47,6 @@ def login():
 
         flash(error)
     return render_template('login.html', form=login_form)
-
 
 
 #Register
@@ -118,9 +119,14 @@ def Survey():
     form = SurveyForm()
     if form.validate_on_submit():
         flash(f'F&B: {form.f_budget.data}\n Essential: {form.e_budget.data}\n Leisure: {form.l_budget.data}\n Others: {form.o_budget.data} Submitted!', 'success')
-        data.save_budget(form)
+        s = shelve.open('test_shelf.db')
+        s['Budget'] = {'Food and Beverage': form.f_budget.data, 'Essentials': form.e_budget.data, 'Leisure': form.l_budget.data, 'Others': form.o_budget.data}
+        s.close()
         return redirect(url_for('Advisor'))
-
+    else:
+        s = shelve.open('test_shelf.db')
+        s['Budget'] = {'Food and Beverage': '', 'Essentials': '', 'Leisure': '', 'Others': ''}
+        s.close()
     return render_template("Survey.html", title='Survey', form=form)
 
 
@@ -138,24 +144,56 @@ def Spending():
 
 @app.route('/Advisor')
 def Advisor():
-    spending_data = data.get_spend()
-    budget_data = data.get_budget()
-    account_data = data.get_account()
-    f_b = budget_data['Food and Beverage'] - account_data['Spent_on_Food_and_Beverage']
-    l_a = budget_data['Leisure'] - account_data['Spent_on_Leisure']
-    e_a = budget_data['Essentials'] - account_data['Spent_on_Essentials']
-    o_a = budget_data['Others'] - account_data['Spent_on_Others']
-    saved_total = account_data['Total_Monthly_Allowance'] - account_data['Spent_on_Food_and_Beverage']\
-                  - account_data['Spent_on_Leisure'] - account_data['Spent_on_Essentials'] - account_data['Spent_on_Others']
-    return render_template("Advisor.html", title='Advisor', spending_data=spending_data, budget_data=budget_data,
-                           f_b=f_b, l_a=l_a, e_a=e_a, o_a=o_a, saved_total=saved_total)
+    f_a = data.f_a
+    l_a = data.l_a
+    e_a = data.e_a
+    o_a = data.o_a
+    food_budget = data.food_budget
+    essen_budget = data.essen_budget
+    others_budget = data.others_budget
+    leisure_budget = data.leisure_budget
+    spending_data = data.spending_data
+    saved_total = data.saved_total
+    return render_template("Advisor.html", title='Advisor', spending_data=spending_data, food_budget=food_budget,
+                           f_a=f_a, l_a=l_a, e_a=e_a, o_a=o_a, saved_total=saved_total, essen_budget=essen_budget,
+                           others_budget=others_budget, leisure_budget=leisure_budget)
 
 
 @app.route('/Activity')
 def Activity():
-    activities = data.get_activity()
+    db = activity
+    bdb = shelve.open('activity.db')
+    return render_template("activitysubmit.html", title='Activity', db=db, bdb=bdb)
 
-    return render_template("Activity.html", title='Activity', activities=activities)
+
+@app.route('/activitySubmit', methods=['POST', 'GET'])
+def activitySubmit():
+    if request.method == 'POST':
+        result = request.form
+        activity_name = result['activityName']
+        image = result['image']
+        hours = result['hours']
+        pricing = result['pricing']
+        a = activities.Activity()
+        a.image = image
+        a.name = activity_name
+        a.hours = hours
+        a.pricing = pricing
+        db = activity
+        db.add_activity('Bob', a)
+        bdb = shelve.open('activity.db')
+        return render_template("Activity.html", result=result, db=db, bdb=bdb)
+
+
+@app.route('/ReturnSubmit', methods=['GET', 'POST'])
+def returnSubmit():
+    if request.method == 'POST':
+        result = request.form
+        a = result['returnName']
+        db = activity
+        db.remove_activity('Bob', a)
+        bdb = shelve.open('activity.db')
+        return render_template('ReturnSubmit.html', result=result, db=db, bdb=bdb)
 
 
 @app.route('/library')
