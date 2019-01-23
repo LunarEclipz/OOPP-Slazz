@@ -1,0 +1,74 @@
+{% extends 'finlayout.html' %}
+{% block content %}
+    <div class="page-header">
+        <h1 id="ActivityHeader">Activity</h1>
+    </div>
+
+    <div class="jumbotron">
+       {% if 'Bob' in bdb %}
+        <table class="table table-dark">
+    <thead>
+        <tr>
+            <th>Image</th>
+            <th>Activity Name</th>
+            <th>Opening Hours</th>
+            <th>Pricing</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for i in bdb['Bob']  %}
+        <tr>
+            <td><img src={{i.image}} height='150' width='150'></td></td>
+            <td>{{ i.name }}</td>
+            <td>{{ i.hours}}</td>
+            <td>{{ i.pricing}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    </table>
+        {% else %}
+        <h3>You currently have no activities listed.</h3>
+    {% endif %}
+
+        <div class="form-group">
+    <form method="POST" action="{{ url_for('activitySubmit') }}">
+        <div class="form-group">
+
+            <h2>Add Activities</h2>
+            <label for="activityName">Name of Activity:</label> <br>
+                <input type="text" id="activityName" name="activityName" required><br>
+
+            <label for="image">Image Url:</label> <br>
+                <input type="text" id="image" name="image" required><br>
+
+            <label for="hours">Hours:</label> <br>
+                <input type="text" id="hours" name="hours" required><br>
+
+            <label for="pricing">Pricing:</label> <br>
+                <input type="text" id="pricing" name="pricing" required><br>
+
+        </div>
+        <input id='activitySubmit' type="submit" value='Add' class="btn btn-warning">
+    </form>
+</div>
+
+<hr>
+        <div class="form-group">
+            <form method="POST" action="{{ url_for('returnSubmit') }}">
+                <div class="form-group">
+                    <h2>Remove Activities</h2>
+                    <label for="returnName">Delete Activity:</label><br>
+                    <select id='returnName' name="returnName">
+                        {% for i in bdb['Bob'] %}
+                        <option value="{{ i.name }}">{{ i.name }}</option>
+                        {% endfor %}
+                    </select><br>
+                </div>
+                <input id='returnSubmit' type="submit" value="Remove" class="btn btn-warning">
+            </form>
+        </div>
+
+
+        </div>
+    </div>
+{% endblock content %}

@@ -30,13 +30,43 @@
       }
     </script>
 <div id="donutchart" style="width: 900px; height: 500px;"></div>
+        
         <h1>Budgets</h1>
-        {% for budget in budget_data%}
-        <h3>The Budget you set for {{budget}} is: {{budget_data[budget]}}<h3>
+        
+        {% if 0 <= food_budget|float < 1 %}
+            <h3>Your budget for Food and Beverages is {{food_budget|float*100}}%</h3>
+        {% else %}
+            <h3>Your budget for Food and Beverages is ${{food_budget}}</h3>
+        {% endif %}
+        
+        {% if 0 <= essen_budget|float < 1 %}
+            <h3>Your budget for Essentials is {{essen_budget|float*100}}%</h3>
+        {% else %}
+            <h3>Your budget for Essentials is ${{essen_budget}}</h3>
+        {% endif %}
+        
+        {% if 0 <= leisure_budget|float < 1 %}
+            <h3>Your budget for Leisure {{leisure_budget|float*100}}%</h3>
+        {% else %}
+            <h3>Your budget for Leisure ${{leisure_budget}}</h3>
+        {% endif %}
+
+        {% if 0 <= others_budget|float < 1 %}
+            <h3>Your budget for Others {{others_budget|float*100}}%</h3>
+        {% else %}
+            <h3>Your budget for Others {{others_budget}}</h3>
+        {% endif %}
+
+        <hr>
+
+        <h1>Spendings</h1>
+        {% for data in spending_data %}
+        <h3>You Spent on {{data.Department}} ${{data.Amount}}</h3>
         {% endfor %}
         <hr>
+
             <h1>Savings</h1>
-            <h3>You saved ${{f_b}} for Food and Beverages.</h3>
+            <h3>You saved ${{f_a}} for Food and Beverages.</h3>
             <h3>You saved ${{e_a}} for Essentials</h3>
             <h3>You saved ${{l_a}} for Leisure</h3>
             <h3>You saved ${{o_a}} for Others</h3>
