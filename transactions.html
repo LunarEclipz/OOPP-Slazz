@@ -1,0 +1,64 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="container">
+        <ul class="nav nav-tabs">
+            <li><a data-toggle="tab" href="#pay" id="pay"><span class="glyphicon glyphicon-usd"> PAY </span></a></li>
+            <li><a data-toggle="tab" href="#top-up" id="top-up"><span class="glyphicon glyphicon-send"> TRANSFER </span></a></li>
+            <li class="active"><a data-toggle="tab" href="#transactions"><span class="glyphicon glyphicon-piggy-bank"> TRANSACTIONS </span></a></li>
+            <li><a data-toggle="tab" href="#add" id="add"><span class="glyphicon glyphicon-plus-sign"> ADD </span></a></li>
+        </ul>
+
+        <div class="tab-content">
+            <div id="transactions" class="tab-pane in active">
+                <h3> Transactions </h3>
+                  <p>Search your transactions by name, date or amount</p>
+                  <input class="form-control" id="myInput" type="text" placeholder="Search..">
+                  <br>
+
+                  {% if 'Bob' in bdb %}
+                  <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody id="myTable">
+                    {% for i in bdb['Bob']  %}
+                    <tr>
+                        <td>{{ i.name }}</td>
+                        <td>{{ i.amount}}</td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                {% endif %}
+            </div>
+        </div>
+
+
+    <script>
+    $(document).on('click', '#top-up', function() {
+        console.log('fire')
+        window.location.href = window.location.origin + "/pay/topup"
+    })
+
+    $(document).on('click', '#pay', function() {
+        console.log('fire')
+        window.location.href = window.location.origin + "/"
+    })
+
+    $(document).on('click', '#add', function() {
+        console.log('fire')
+        window.location.href = window.location.origin + "/pay/add"
+    })
+    $(document).ready(function(){
+      $("#myInput").on("keyup", function() {
+        var value = $(this).val().toLowerCase();
+        $("#myTable tr").filter(function() {
+          $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+      });
+    });
+    </script>
+{% endblock content %}
