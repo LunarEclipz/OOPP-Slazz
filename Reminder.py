@@ -1,15 +1,13 @@
 import datetime as dt
 import shelve
-import Book
 
 
-class Reminder(Book.Book):
+class Reminder:
 
     reminders = []
     bookcount = 0
 
     def __init__(self, username, date):
-        super().__init__()
         self.username = username
         # need to use self.set_book to set self.bookname
         self.bookname = ''
