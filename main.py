@@ -1,36 +1,24 @@
 from flask import *
-from forms import SurveyForm, transfer_form, topup_form, LoginForm, RegisterForm
-import data
-import activity
 from user import *
-import Book, Due_date, Reminder
+from forms import *
 from functools import wraps
-import activities
+from traveldata import *
 
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = '5791628bb0b13ce0c676dfde280ba245'
 app.config.from_mapping(
     SECRET_KEY='dev'
 )
-
 
 @app.route('/')
 def home():
     return render_template('home.html')
 
-
 @app.route('/about')
 def about():
     return render_template('about.html')
 
-
-@app.route('/loggedin')
-def loggedin():
-    return render_template('loggedin.html')
-
-
-#User Login
+#Login
 @app.route('/login',  methods=('GET', 'POST'))
 def login():
     login_form = LoginForm(request.form)
@@ -40,34 +28,30 @@ def login():
             error = 'Incorrect username and/or password'
         else:
             session['logged_in'] = True
-            session['username'] = user.username
+            session['username'] = user.id
 
             flash('You are now logged in','success')
             return render_template('loggedin.html')
 
-        flash(error)
+        flash(error, 'danger')
     return render_template('login.html', form=login_form)
-
+#/Login
 
 #Register
 @app.route('/register', methods=('GET', 'POST'))
 def register():
     form = RegisterForm(request.form)
-    if request.method == 'POST':
-        username = form.id.data
+    if request.method == 'POST' and form.validate():
+        id = form.id.data
+        email = form.email.data
         password = form.password.data
-        if not username:
-            error = 'Username is required.'
-        elif not password:
-            error = 'Password is required.'
-        else:
-            create_user(username, password)
-            flash('You are now registered and can log in', 'success')
-            return redirect(url_for('login'))
-        flash(error)
+        create_user(id, email, password)
+        flash('You are now registered and can log in.', 'success')
+        return redirect(url_for('login'))
     return render_template('register.html', form=form)
+#/Register
 
-
+#Check if user is logged in
 def is_logged_in(f):
     @wraps(f)
     def wrap(*args, **kwargs):
@@ -77,154 +61,47 @@ def is_logged_in(f):
             flash('Unauthorized, Please login', 'danger')
             return redirect(url_for('login'))
     return wrap
+#/Check
 
-
+#Logout
 @app.route('/logout', methods=('GET', 'POST'))
 def logout():
     session.clear()
     return redirect(url_for('login'))
 
+@app.route('/loggedin')
+def loggedin():
+    return render_template('loggedin.html')
 
-@app.route('/pay')
-def pay():
-    return render_template("pay.html", title="Pay")
+#Transport
+@app.route('/transport')
+def transport():
+    return render_template('transport.html')
 
-# Transfer Tab
+@app.route('/directions')
+def directions():
+    return render_template('directions.html')
 
+@app.route('/routes', methods=('GET', 'POST'))
+def route():
+    return render_template('routes.html')
 
-@app.route('/transfer')
-def transfer():
-    form1 = transfer_form()
-    form2 = topup_form()
-    return render_template("transfer.html", title="Transfer", form1=form1, form2=form2)
+@app.route('/travels')
+def travels():
+    return render_template('travels.html')
 
-
-@app.route('/transactions')
-def transactions():
-    return render_template("transactions.html", title="Transactios")
-
-
-@app.route('/add')
-def add():
-    return render_template("add.html", title="Add")
-
-
-@app.route('/Finance')
-def Financehome():
-    return render_template("Finance.html", title='Finance')
-
-
-@app.route('/Survey', methods=['GET', 'POST'])
-def Survey():
-    form = SurveyForm()
-    if form.validate_on_submit():
-        flash(f'F&B: {form.f_budget.data}\n Essential: {form.e_budget.data}\n Leisure: {form.l_budget.data}\n Others: {form.o_budget.data} Submitted!', 'success')
-        s = shelve.open('test_shelf.db')
-        s['Budget'] = {'Food and Beverage': form.f_budget.data, 'Essentials': form.e_budget.data, 'Leisure': form.l_budget.data, 'Others': form.o_budget.data}
-        s.close()
-        return redirect(url_for('Advisor'))
-    else:
-        s = shelve.open('test_shelf.db')
-        s['Budget'] = {'Food and Beverage': '', 'Essentials': '', 'Leisure': '', 'Others': ''}
-        s.close()
-    return render_template("Survey.html", title='Survey', form=form)
-
-
-@app.route('/Savings')
-def Savings():
-    saved_data = data.get_save()
-    return render_template("Savings.html", title='Savings', saved_data=saved_data)
-
-
-@app.route('/Spending')
-def Spending():
-    spending_data = data.get_spend()
-    return render_template("Spending.html", title='Spending', spending_data=spending_data)
-
-
-@app.route('/Advisor')
-def Advisor():
-    f_a = data.f_a
-    l_a = data.l_a
-    e_a = data.e_a
-    o_a = data.o_a
-    food_budget = data.food_budget
-    essen_budget = data.essen_budget
-    others_budget = data.others_budget
-    leisure_budget = data.leisure_budget
-    spending_data = data.spending_data
-    saved_total = data.saved_total
-    return render_template("Advisor.html", title='Advisor', spending_data=spending_data, food_budget=food_budget,
-                           f_a=f_a, l_a=l_a, e_a=e_a, o_a=o_a, saved_total=saved_total, essen_budget=essen_budget,
-                           others_budget=others_budget, leisure_budget=leisure_budget)
-
-
-@app.route('/Activity')
-def Activity():
-    db = activity
-    bdb = shelve.open('activity.db')
-    return render_template("activitysubmit.html", title='Activity', db=db, bdb=bdb)
-
-
-@app.route('/activitySubmit', methods=['POST', 'GET'])
-def activitySubmit():
-    if request.method == 'POST':
-        result = request.form
-        activity_name = result['activityName']
-        image = result['image']
-        hours = result['hours']
-        pricing = result['pricing']
-        a = activities.Activity()
-        a.image = image
-        a.name = activity_name
-        a.hours = hours
-        a.pricing = pricing
-        db = activity
-        db.add_activity('Bob', a)
-        bdb = shelve.open('activity.db')
-        return render_template("Activity.html", result=result, db=db, bdb=bdb)
-
-
-@app.route('/ReturnSubmit', methods=['GET', 'POST'])
-def returnSubmit():
-    if request.method == 'POST':
-        result = request.form
-        a = result['returnName']
-        db = activity
-        db.remove_activity('Bob', a)
-        bdb = shelve.open('activity.db')
-        return render_template('ReturnSubmit.html', result=result, db=db, bdb=bdb)
-
-
-@app.route('/library')
-def libraryhome():
-    return render_template("Library.html")
-
-
-@app.route('/Reminders')
-def reminders():
-    bk = ['Dante', 'Locker B']
-    books = Book.Book
-    reminder = Reminder.Reminder
-    return render_template("Reminders.html", books=books, reminder=reminder, bk=bk)
-
-
-@app.route('/Payment')
-def payment():
-    return render_template("Payment.html")
-
-
-@app.route('/RecommendedBooks')
-def recBooks():
-    return render_template("RecommendedBooks.html")
-
-
-@app.route('/BooksOnLoan')
-def loaned():
-    book = Book
-    duedate = Due_date
-    return render_template('BorrowedBooks.html', book=book, duedate=duedate)
+@app.route('/add_travel', methods=('GET', 'POST'))
+def add_travel():
+    form = TravelForm(request.form)
+    if request.method == 'POST' and form.validate():
+        start = form.start.data
+        destination = form.destination.data
+        fare = form.fare.data
+        create_travel(start, destination, fare)
+        flash('Your travel has been added', 'success')
+        return redirect(url_for('travels'))
+    return render_template('add_travel.html', form=form)
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)

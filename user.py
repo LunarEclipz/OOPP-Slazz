@@ -2,18 +2,16 @@ import shelve
 
 class User:
     def __init__(self):
-        self.username = ''
+        self.id = ''
+        self.email = ''
         self.password = ''
 
-
 users = shelve.open('user')
-
 
 def clear_user():
     klist = list(users.keys())
     for key in klist:
         del users[key]
-
 
 def get_users():
     user_list = []
@@ -28,18 +26,23 @@ def init_users():
     for i in range(5):
         create_user('user'+str(i), 'pass'+str(i))
 
-
-def get_user(username, password):
-    if username in users:
-        user = users[username]
-        if user.password == password:
+def get_user(id, password):
+    if id in users:
+        user = users[id]
+        if  user.password == password:
             return user
     return None
 
-
-def create_user(username, password):
+def create_user(id, email, password):
     u = User()
-    u.username = username
+    u.id = id
+    u.email = email
     u.password = password
-    users[username] = u
+    users[id] = u
+
+
+
+
+
+
 
