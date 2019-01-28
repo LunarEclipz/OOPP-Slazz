@@ -1,40 +1,47 @@
-{% extends "layout.html" %}
+{% extends "zlayout.html" %}
 {% block content %}
     <div class="container">
         <ul class="nav nav-tabs">
             <li><a data-toggle="tab" href="#pay" id="pay"><span class="glyphicon glyphicon-usd"> PAY </span></a></li>
-            <li><a data-toggle="tab" href="#top-up" id="top-up"><span class="glyphicon glyphicon-send"> TRANSFER </span></a></li>
+            <li class="active"><a data-toggle="tab" href="#top-up" id="top-up"><span class="glyphicon glyphicon-send"> TOP-UP </span></a></li>
             <li><a data-toggle="tab" href="#transactions" id="transactions"><span class="glyphicon glyphicon-piggy-bank"> TRANSACTIONS </span></a></li>
-            <li class="active"><a data-toggle="tab" href="#add"><span class="glyphicon glyphicon-plus-sign"> ADD </span></a></li>
+            <li><a data-toggle="tab" href="#add" id="add"><span class="glyphicon glyphicon-plus-sign"> ADD </span></a></li>
         </ul>
 
-    <div class="tab-content">
-      <div id="add" class="tab-pane in active">
-        <h3> Add </h3>
-          <div class="container">
-              <div class="content-section">
-                  <div class="form-group">
-                    <form method="POST" action="{{ url_for('pay') }}">
-                    <div class="form-group">
+        <div class="tab-content">
+            <div id="top-up" class="tab-pane in active">
+                <h3> Top-up </h3>
+                <div class="container">
+                    <div class="content-section">
+                        <div class="form-group">
+                            <form method="POST" action="{{ url_for('transactions') }}">
+                            <div class="form-group">
 
-                        <h2>New Payee</h2>
-                        <label for="name">Payee</label> <br>
-                        <input type="text" id="name" name="name" required><br>
+                                <h2>Bank Transfer to Ezlink</h2>
+                                <label for="na">Bank Account</label> <br>
+                                <input type="text" id="na" name="na" required><br>
 
-                        <label for="cardNum">Ezlink Card Number</label> <br>
-                        <input type="text" id="cardNum" name="cardNum" required><br>
+                                <label for="amount">Amount</label> <br>
+                                <input type="text" id="amount" name="amount" required><br>
 
+                                <label for="bap">Bank Acount Pin</label> <br>
+                                <input type="text" id="bap" name="bap" required><br>
+
+                                <label for="cbap">Confirm Bank Account Pin</label> <br>
+                                <input type="text" id="cbap" name="cbap" required><br>
+
+                            </div>
+                                <input id='logSubmit' type="submit" value='Send' class="btn btn-warning">
+                            </form>
+                        </div>
                     </div>
-                        <input id='logSubmit' type="submit" value='Add' class="btn btn-warning">
-                    </form>
-              </div>
-          </div>
-      </div>
+                </div>
+
 
     <script>
-    $(document).on('click', '#top-up', function() {
+    $(document).on('click', '#pay', function() {
         console.log('fire')
-        window.location.href = window.location.origin + "/pay/topup"
+        window.location.href = window.location.origin + "/pay"
     })
 
     $(document).on('click', '#transactions', function() {
@@ -42,13 +49,9 @@
         window.location.href = window.location.origin + "/pay/transactions"
     })
 
-    $(document).on('click', '#pay', function() {
+    $(document).on('click', '#add', function() {
         console.log('fire')
-        window.location.href = window.location.origin + "/"
+        window.location.href = window.location.origin + "/pay/add"
     })
     </script>
 {% endblock content %}
-
-
-
-

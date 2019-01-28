@@ -1,4 +1,4 @@
-{% extends "layout.html" %}
+{% extends "zlayout.html" %}
 {% block content %}
     <div class="container">
         <ul class="nav nav-tabs">
@@ -45,7 +45,7 @@
 
     $(document).on('click', '#pay', function() {
         console.log('fire')
-        window.location.href = window.location.origin + "/"
+        window.location.href = window.location.origin + "/pay"
     })
 
     $(document).on('click', '#add', function() {

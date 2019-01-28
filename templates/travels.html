@@ -1,0 +1,29 @@
+{% include 'translayout.html' %}
+{% block body %}
+<div class="container">
+    <div class = 'jumbotron text-center'>
+        <h1> Your Recent Travels</h1>
+        <a class="btn btn-warning" href = "{{ url_for('add_travel') }}">Add Travel</a>
+    </div>
+</div>
+<div class="container">
+    <div class = 'jumbotron'>
+        <table class="table table-striped">
+            <tr>
+              <th>Start</th>
+              <th>Destination</th>
+              <th>Fare</th>
+              <th>Date</th>
+            </tr>
+                {% for i in bdb['Bob'] %}
+                    <tr>
+                        <td>{{i.start}}</td>
+                        <td>{{i.destination}}</td>
+                        <td>${{i.fare}}</td>
+                        <td>{{i.date}}</td>
+                    </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+{% endblock %}

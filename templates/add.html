@@ -1,6 +1,6 @@
-{% extends "layout.html" %}
+{% extends "zlayout.html" %}
 {% block content %}
-    <div class="container">
+<div class="container">
         <ul class="nav nav-tabs">
             <li><a data-toggle="tab" href="#pay" id="pay"><span class="glyphicon glyphicon-usd"> PAY </span></a></li>
             <li><a data-toggle="tab" href="#top-up" id="top-up"><span class="glyphicon glyphicon-send"> TRANSFER </span></a></li>
@@ -44,11 +44,8 @@
 
     $(document).on('click', '#pay', function() {
         console.log('fire')
-        window.location.href = window.location.origin + "/"
+        window.location.href = window.location.origin + "/pay"
     })
     </script>
 {% endblock content %}
-
-
-
 
