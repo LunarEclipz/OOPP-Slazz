@@ -1,24 +1,33 @@
-{% extends 'liblayout.html' %}
-{% block content %}
+{% extends 'Layout.html' %}
+
+{% block body %}
+<div class="container">
     <div class="page-header">
     <h1 id="recBooksHeader">Recommended Books just for you</h1>
     </div>
     <div class="jumbotron">
     <h2>Your recent loans</h2>
-        <div class="row">
+        <div class="column">
             <div class="recentLoans">
-                <img src="https://i.pinimg.com/736x/0b/54/be/0b54be4e7161da13616bf23e097742c9--lockers-coins.jpg" width="110" height="158">
-                <img src="#" width="110" height="158">
-                <img src="#" width="110" height="158">
-                <img src="#" width="110" height="158">
+            {% if session['username']+'LOGBOOK' in bdb %}
+                {% for i in range(4) %}
+                    <p>{{ rl[i] }}</p><br>
+                {% endfor %}
+            {% else %}
+                <p>You do not have any recent loans.</p>
+            {% endif %}
             </div>
         </div>
     <h2>Based on your recent reads</h2>
-        <div class="row">
-            <img src="https://i.pinimg.com/736x/0b/54/be/0b54be4e7161da13616bf23e097742c9--lockers-coins.jpg" width="110" height="158">
-            <img src="#" width="110" height="158">
-            <img src="#" width="110" height="158">
-            <img src="#" width="110" height="158">
+        <div class="column">
+         {% if session['username']+'LOGBOOK' in bdb %}
+            {% for i in rdb[book1Gen] %}
+                <p>{{ i }}</p><br>
+            {% endfor %}
+        {% else %}
+            <p>Loan books to get book recommendations.</p>
+        {% endif %}
         </div>
     </div>
-{% endblock content %}
+    </div>
+{% endblock %}

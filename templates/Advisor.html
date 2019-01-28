@@ -1,11 +1,11 @@
-{% extends 'finlayout.html' %}
+{% extends 'layout_fin.html' %}
 {% block content %}
 
-    <div class="page-header">
-        <h1 id="AdvisorHeader">Advisor</h1>
+    <div class="jumbotron text-center">
+        <h1>Advisor</h1>
     </div>
 
-    <div class="jumbotron">
+    <div class="container-fluid text-center">
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
       google.charts.load("current", {packages:["corechart"]});
@@ -15,9 +15,14 @@
       function drawChart() {
         var data = google.visualization.arrayToDataTable([
           ['Department', 'Amount'],
-          {% for data in spending_data %}
-          ['{{data.Department}}', parseInt({{data.Amount}})],
+        {% if session['username'] in bdb %}
+        {% for i in bdb[session['username']]  %}
+          ['Food and Beverages', parseInt({{i.food_e}})],
+          ['Leisure', parseInt({{i.leisure_e}})],
+          ['Essentials', parseInt({{i.essen_e}})],
+          ['Others', parseInt({{i.others_e}})],
           {% endfor %}
+        {% endif %}
         ]);
 
         var options = {
@@ -29,47 +34,126 @@
         chart.draw(data, options);
       }
     </script>
-<div id="donutchart" style="width: 900px; height: 500px;"></div>
-        
-        <h1>Budgets</h1>
-        
-        {% if 0 <= food_budget|float < 1 %}
-            <h3>Your budget for Food and Beverages is {{food_budget|float*100}}%</h3>
-        {% else %}
-            <h3>Your budget for Food and Beverages is ${{food_budget}}</h3>
-        {% endif %}
-        
-        {% if 0 <= essen_budget|float < 1 %}
-            <h3>Your budget for Essentials is {{essen_budget|float*100}}%</h3>
-        {% else %}
-            <h3>Your budget for Essentials is ${{essen_budget}}</h3>
-        {% endif %}
-        
-        {% if 0 <= leisure_budget|float < 1 %}
-            <h3>Your budget for Leisure {{leisure_budget|float*100}}%</h3>
-        {% else %}
-            <h3>Your budget for Leisure ${{leisure_budget}}</h3>
-        {% endif %}
+<div id="donutchart" style="width: 900px; height: 500px;" class="container-fluid text-center"></div>
 
-        {% if 0 <= others_budget|float < 1 %}
-            <h3>Your budget for Others {{others_budget|float*100}}%</h3>
+        <div class="container-fluid bg-grey text-center">
+        <h3>Budgets Settings:</h3>
+               {% if session['username'] in bdb %}
+        <table class="table">
+    <thead>
+        <tr>
+            <th>Food</th>
+            <th>Essentials</th>
+            <th>Leisure</th>
+            <th>Others</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for i in bdb[session['username']]  %}
+        <tr>
+        <td>
+        {% if 0 <= i.food_b|float < 1 %}
+            <p>Your budget for Food and Beverages is {{i.food_b|float*100}}%</p>
         {% else %}
-            <h3>Your budget for Others {{others_budget}}</h3>
+            <p>Your budget for Food and Beverages is ${{i.food_b}}</p>
         {% endif %}
-
-        <hr>
-
-        <h1>Spendings</h1>
-        {% for data in spending_data %}
-        <h3>You Spent on {{data.Department}} ${{data.Amount}}</h3>
+        </td>
+        <td>
+        {% if 0 <= i.essen_b|float < 1 %}
+            <p>Your budget for Essentials is {{i.essen_b|float*100}}%</p>
+        {% else %}
+            <p>Your budget for Essentials is ${{i.essen_b}}</p>
+        {% endif %}
+        </td>
+            <td>
+        {% if 0 <= i.leisure_b|float < 1 %}
+            <p>Your budget for Leisure {{i.leisure_b|float*100}}%</p>
+        {% else %}
+            <p>Your budget for Leisure ${{i.leisure_b}}</p>
+        {% endif %}
+            </td>
+            <td>
+        {% if 0 <= i.others_b|float < 1 %}
+            <p>Your budget for Others {{i.others_b|float*100}}%</p>
+        {% else %}
+            <p>Your budget for Others {{i.others_b}}</p>
+        {% endif %}
+            </td>
+        </tr>
         {% endfor %}
-        <hr>
+    </tbody>
+    </table class="table">
+        {% endif %}
 
-            <h1>Savings</h1>
-            <h3>You saved ${{f_a}} for Food and Beverages.</h3>
-            <h3>You saved ${{e_a}} for Essentials</h3>
-            <h3>You saved ${{l_a}} for Leisure</h3>
-            <h3>You saved ${{o_a}} for Others</h3>
-            <h3>You saved a total of ${{saved_total}}.</h3>
+       {% if session['username'] in bdb %}
+        <h3>Spending:</h3>
+        <table class="table">
+    <thead>
+        <tr>
+            <th>Food</th>
+            <th>Essentials</th>
+            <th>Leisure</th>
+            <th>Others</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for i in bdb[session['username']] %}
+        <tr>
+            <td>{{i.food_e}}</td>
+            <td>{{ i.essen_e }}</td>
+            <td>{{ i.leisure_e}}</td>
+            <td>{{ i.others_e}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    </table>
+        {% endif %}
+
+
+        <h3>Results: </h3>
+        <table class="table">
+    <thead>
+        <tr>
+            <th>Food</th>
+            <th>Essentials</th>
+            <th>Leisure</th>
+            <th>Others</th>
+            <th>Total</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>You Saved ${{f_a}}</td>
+            <td>You Saved ${{e_a}}</td>
+            <td>You Saved ${{l_a}}</td>
+            <td>You Saved ${{o_a}}</td>
+            <td>You Saved ${{saved_total}}</td>
+        </tr>
+    </tbody>
+    </table>
     </div>
+
+
+    <script>
+        $(document).on('click', '#abo', function() {
+            console.log('fire')
+            window.location.href = window.location.origin + "/Finance"
+        })
+        $(document).on('click', '#sav', function() {
+            console.log('fire')
+            window.location.href = window.location.origin + "/Savings"
+        })
+        $(document).on('click', '#spe', function() {
+            console.log('fire')
+            window.location.href = window.location.origin + "/Spending"
+        })
+        $(document).on('click', '#act', function() {
+            console.log('fire')
+            window.location.href = window.location.origin + "/Activity"
+        })
+        $(document).on('click', '#adv', function() {
+            console.log('fire')
+            window.location.href = window.location.origin + "/Advisor"
+        })
+    </script>
 {% endblock content %}

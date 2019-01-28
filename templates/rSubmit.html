@@ -1,0 +1,39 @@
+{% extends 'layout_fin.html' %}
+{% block content %}
+
+    <p>Deleted Activity: {{ result['returnName'] }}</p>
+    <div class="jumbotron text-center">
+        <h1>Activity</h1>
+    </div>
+
+    <div class="container-fluid text-center">
+       {% if session['username'] in bdb %}
+        <table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Image</th>
+            <th scope="col">Activity Name</th>
+            <th scope="col">Opening Hours</th>
+            <th scope="col">Pricing</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for i in bdb[session['username']]  %}
+        <tr>
+
+            <td><img src={{i.image}} height='150' width='150'></td></td>
+            <td>{{ i.name }}</td>
+            <td>{{ i.hours}}</td>
+            <td>{{ i.pricing}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    </table>
+        {% else %}
+        <h3>You currently have no activities listed.</h3>
+    {% endif %}
+    <button class="btn btn-warning btn-lg"><a href="Activity">Back to add activities</a></button>
+
+        </div>
+    </div>
+{% endblock content %}

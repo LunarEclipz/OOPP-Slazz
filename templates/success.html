@@ -1,0 +1,37 @@
+{% extends 'layout.html' %}
+<head>
+    <meta charset="UTF-8">
+    <title>Success</title>
+
+
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+{% block body %}
+
+<div>
+    <center>
+  <h1 class="h1Success">You've successfully updated your profile!</h1>
+
+<!--- Success Page tick animation --->
+           <div class="check_mark">
+             <div class="sa-icon sa-success animate">
+               <span class="sa-line sa-tip animateSuccessTip"></span>
+               <span class="sa-line sa-long animateSuccessLong"></span>
+               <div class="sa-placeholder"></div>
+               <div class="sa-fix"></div>
+             </div>
+           </div>
+
+  <p>Please click on the button below to proceed to the <strong>Home Page.</strong> </p>
+
+  <p>
+    Having trouble? <a href="{{ url_for('contactUs') }}"  class="contactUs">Contact us</a>
+  </p>
+  <p>
+    <a class="button" href="{{ url_for('home') }}" >Continue to home page</a>
+  </p>
+    </center>
+</div>
+
+{% endblock %}

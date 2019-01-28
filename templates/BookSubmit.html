@@ -1,12 +1,10 @@
-{% extends 'Layout.html' %}
+{% extends 'layout.html' %}
 
 {% block body %}
 <div class="container">
     <div class="page-header">
-        Book return success!
+        Book submit success!
     </div>
-<div class="jumbotron">
-<p>Book returned: {{ result['returnBook'] }}</p>
 <h3>Current Loans</h3>
     <table border="1" cellpadding="3">
     <thead>
@@ -28,7 +26,7 @@
         {% endfor %}
     </tbody>
     </table>
-<h3>All Loans (Current and Previous loans)</h3>
+<h3>Log of All Loans (Current and Previous loans)</h3>
     <table border="1" cellpadding="3">
     <thead>
         <tr>
@@ -38,7 +36,7 @@
         </tr>
     </thead>
     <tbody>
-        {% for i in bdb['BobLOGBOOK']  %}
+        {% for i in bdb[log]  %}
         <tr>
             <td>{{ i.title }}</td>
             <td>{{ i.genre }}</td>
@@ -47,7 +45,6 @@
         {% endfor %}
     </tbody>
     </table>
-</div>
     <button><a href="{{ url_for('loaned') }}">Back to Books On Loan</a></button>
 </div>
 {% endblock %}

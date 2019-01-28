@@ -1,0 +1,14 @@
+{% extends 'Layout.html' %}
+
+{% block body %}
+<div class="container">
+    <div class="page-header">
+        Book renewal success!
+    </div>
+    <div class="jumbotron">
+        <p>Book title: {{ result['renewBooks'] }}</p>
+        <p>Renewed Due Date: {{ db.extractBook(session['username'], result['renewBooks']).due_date }}</p>
+    </div>
+    <button><a href="{{ url_for('loaned') }}">Back to Books On Loan</a></button>
+</div>
+{% endblock %}

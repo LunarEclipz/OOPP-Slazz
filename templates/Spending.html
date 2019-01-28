@@ -1,11 +1,11 @@
-{% extends 'finlayout.html' %}
+{% extends 'layout_fin.html' %}
 {% block content %}
 
-    <div class="page-header">
-        <h1 id="SpendingHeader">Spending</h1>
+    <div class="jumbotron text-center">
+        <h1>Spending</h1>
     </div>
 
-    <div class="jumbotron">
+    <div class="container-fluid text-center">
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
       google.charts.load("current", {packages:["corechart"]});
@@ -15,9 +15,14 @@
       function drawChart() {
         var data = google.visualization.arrayToDataTable([
           ['Department', 'Amount'],
-          {% for data in spending_data %}
-          ['{{data.Department}}', parseInt({{data.Amount}})],
+        {% if session['username'] in bdb %}
+        {% for i in bdb[session['username']]  %}
+          ['Food and Beverages', parseInt({{i.food_e}})],
+          ['Leisure', parseInt({{i.leisure_e}})],
+          ['Essentials', parseInt({{i.essen_e}})],
+          ['Others', parseInt({{i.others_e}})],
           {% endfor %}
+        {% endif %}
         ]);
 
         var options = {
@@ -29,11 +34,54 @@
         chart.draw(data, options);
       }
     </script>
-<div id="donutchart" style="width: 900px; height: 500px;"></div>
-        <hr>
-        {% for data in spending_data %}
-        <h3>For {{data.Department}} you spent ${{data.Amount}}</h3>
-      {% endfor %}
+<div id="donutchart" style="width: 900px; height: 500px;" class="container-fluid text-center"></div>
+        <div class="container-fluid bg-grey text-center">
+       {% if session['username'] in bdb %}
+        <h3>Spending:</h3>
+        <table class="table">
+    <thead>
+        <tr>
+            <th>Food</th>
+            <th>Essentials</th>
+            <th>Leisure</th>
+            <th>Others</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for i in bdb[session['username']] %}
+        <tr>
+            <td>{{i.food_e}}</td>
+            <td>{{ i.essen_e }}</td>
+            <td>{{ i.leisure_e}}</td>
+            <td>{{ i.others_e}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    </table>
+        {% endif %}
 
     </div>
+
+    <script>
+        $(document).on('click', '#abo', function() {
+            console.log('fire')
+            window.location.href = window.location.origin + "/Finance"
+        })
+        $(document).on('click', '#sav', function() {
+            console.log('fire')
+            window.location.href = window.location.origin + "/Savings"
+        })
+        $(document).on('click', '#spe', function() {
+            console.log('fire')
+            window.location.href = window.location.origin + "/Spending"
+        })
+        $(document).on('click', '#act', function() {
+            console.log('fire')
+            window.location.href = window.location.origin + "/Activity"
+        })
+        $(document).on('click', '#adv', function() {
+            console.log('fire')
+            window.location.href = window.location.origin + "/Advisor"
+        })
+    </script>
 {% endblock content %}

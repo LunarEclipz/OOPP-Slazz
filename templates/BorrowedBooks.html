@@ -1,18 +1,108 @@
-{% extends 'liblayout.html' %}
-{% block content %}
+{% extends 'Layout.html' %}
+
+{% block body %}
+<div class="container">
     <div class="page-header">
     <h1 id="borrowedBooksHeader">Books on Loan</h1>
     </div>
     <div class="jumbotron">
     <p>See what books you have on loan, and renew them here.</p>
-
-    <form method="post">
-        <h2>Enter borrowed book entry here</h2>
-        Title of Book:<br>
-        <input type="text" name="bookTitle"><br>
-        {% set bk = book.today_date() %}
-        <label for="LoanDate">Date of loan:</label><br>
-        <input id="LoanDate" name="LoanDate" type="date" value="{{ bk }}"><br>
-        <input type="submit">
+    {# Table of books on loan. If no books on loan, table does not show #}
+    <h3>Current Loans</h3>
+    {% if session['username'] in bdb %}
+    <table border="1" cellpadding="3">
+    <thead>
+        <tr>
+            <th>Title of Book</th>
+            <th>Genre</th>
+            <th>Loan Date</th>
+            <th>Due Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for i in bdb[session['username']]  %}
+        <tr>
+            <td>{{ i.title }}</td>
+            <td>{{ i.genre }}</td>
+            <td>{{ i.date_borrowed }}</td>
+            <td>{{ i.due_date }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    </table>
+    {% else %}
+        <p>You currently have no books on loan.</p>
+    {% endif %}
+<div class="form-group">
+    <form method="POST" action="{{ url_for('booksubmit') }}">
+        <div class="form-group">
+            <h2>Enter borrowed book entry here</h2>
+            <label for="bookTitle">Title of Book:</label> <br>
+                <input type="text" id="bookTitle" name="bookTitle" required><br>
+            <label for="genreselect">Genre of book:</label><br>
+                <select name="genre" id="genreselect" required>
+                    {% for i in genres %}
+                    <option value="{{ i }}">{{ i }}</option>
+                    {% endfor %}
+                </select><br>
+            {% set bk = book.today_date() %}
+            <label for="loanDate">Date of loan:</label><br>
+                <input id="loanDate" name="loanDate" type="date" value="{{ bk }}" required><br>
+        </div>
+        <input id='bookSubmit' type="submit" class="btn btn-warning" value="Submit Book Loan">
     </form>
-{% endblock content %}
+</div>
+    {# renew books in form below #}
+   <h2>Renew your books here</h2><br>
+        <div class="form-group">
+            <form method="POST" action="{{ url_for('renewSubmit') }}">
+                <div class="form-group">
+                    <label for="renewBooks">Title of book:</label><br>
+                    <select id='renewBooks' name="renewBooks">
+                    {# replace session['username'] with the user #}
+                        {% for i in bdb[session['username']] %}
+                        <option value="{{ i.title }}">{{ i.title }}</option>
+                        {% endfor %}
+                    </select><br>
+                </div>
+                <input id='renewSubmit' type="submit" class="btn btn-warning" value="Renew Book">
+            </form>
+        </div>
+    {# return books in form below #}
+    <h2>Return your books here</h2><br>
+        <div class="form-group">
+            <form method="POST" action="{{ url_for('returnSubmit') }}">
+                <div class="form-group">
+                    <label for="returnBook">Title of book:</label><br>
+                    <select id='returnBook' name="returnBook">
+                    {# replace session['username'] with the user #}
+                        {% for i in bdb[session['username']] %}
+                        <option value="{{ i.title }}">{{ i.title }}</option>
+                        {% endfor %}
+                    </select><br>
+                </div>
+                <input id='returnSubmit' type="submit" class="btn btn-warning" value="Return Book">
+            </form>
+        </div>
+    <h3>Log of All Loans (Current and Previous loans)</h3>
+    <table border="1" cellpadding="3">
+    <thead>
+        <tr>
+            <th>Title of Book</th>
+            <th>Genre</th>
+            <th>Loan Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for i in bdb[log]  %}
+        <tr>
+            <td>{{ i.title }}</td>
+            <td>{{ i.genre }}</td>
+            <td>{{ i.date_borrowed }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    </table>
+    </div>
+</div>
+{% endblock %}

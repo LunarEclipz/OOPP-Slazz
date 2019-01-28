@@ -1,0 +1,13 @@
+{% extends 'Layout.html' %}
+{% block body %}
+    <div class="page-header">
+    <h1>Reminder for {{ result['books'] }} set!</h1>
+    </div>
+    <div class="jumbotron">
+        <p>Book title: {{ result['books'] }}</p>
+        <p>Date of Reminder: {{ result['RemindDate'] }}</p>
+    </div>
+    <div class="footer">
+    <button><a href="{{ url_for('reminders') }}">Back to Reminders</a> </button>
+    </div>
+{% endblock %}

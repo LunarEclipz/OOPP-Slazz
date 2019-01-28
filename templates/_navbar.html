@@ -13,9 +13,9 @@
           <ul class="nav navbar-nav navbar-right">
             {% if session.logged_in %}
 
-              <li><a href="/transfer">Pay</a></li>
+              <li><a href="{{ url_for('pay') }}">Pay</a></li>
               <li><a href="/Finance">Finance</a></li>
-              <li><a href="/library">Your Library</a></li>
+              <li><a href="/Library">Your Library</a></li>
               <li><a href="/loggedin">Profile Page</a></li>
               <li><a href="/logout">Logout</a></li>
             {% else %}

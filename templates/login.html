@@ -9,17 +9,25 @@
   <header>
 
   <h1>Log In</h1>
-
+  <br>
   </header>
   {% for message in get_flashed_messages() %}
     <div class="flash">{{ message }}</div>
   {% endfor %}
 
   <form method="post" action="/login">
-    {{ render_field(form.id, class_='form-control') }}
-    {{ render_field(form.password, class_='form-control') }}
+    <div class="form-group">
+      {{render_field(form.id, class_="form-control")}}
+    </div>
+    <div class="form-group">
+      {{render_field(form.password, class_="form-control")}}
+    </div>
+
+    {% for message in get_flashed_messages() %}
+    <div class="flash">{{ message }}</div>
+  {% endfor %}
     <br>
-    <button type="submit" class="btn btn-warning">{{ form.submit }}</button>
+    <p><input type="submit" class="btn btn-warning" value="Submit"></p>
 
   </form>
 

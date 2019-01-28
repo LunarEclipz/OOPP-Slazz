@@ -1,0 +1,87 @@
+{% extends 'layout.html' %}
+<head>
+    <meta charset="UTF-8">
+    <title>Profile</title>
+
+        <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+
+</head>
+{% block body %}
+
+
+<script>
+
+function confirmation() {
+        alert("You have submitted you feedback to us!");
+}
+
+</script>
+
+<div class="container">
+	<div class="row">
+		<div class="col-md-3 ">
+		     <div class="list-group ">
+              <a href="{{ url_for('profile') }}" class="list-group-item list-group-item-action">Profile</a>
+              <a href="{{ url_for('balance') }}" class="list-group-item list-group-item-action">Balance</a>
+              <a href="{{ url_for('message') }}" class="list-group-item list-group-item-action">Messages</a>
+              <a href="{{ url_for('contactUs') }}" class="list-group-item list-group-item-action active">Contact Us</a>
+
+            </div>
+		</div>
+		<div class="col-md-9">
+		    <div class="card">
+		        <div class="card-body">
+		            <div class="row">
+		                <div class="col-md-12">
+		                    <h4>Feedback</h4>
+		                    <hr>
+		                </div>
+		            </div>
+		            <div class="row">
+		                <div class="col-md-12">
+		                    <div class="container">
+                                  <form id="contact" action="{{ url_for('contactUs') }}" method="post">
+                                    <h5>Any comments or issues you would like to be clarified with do write to us</h5>
+                                      <div class="form-group row">
+                                          <div class="col-8">
+                                    <fieldset>
+                                      <input name='id' placeholder="Your Username" type="text" tabindex="1" class="form-control here" required autofocus>
+                                    </fieldset>
+                                          </div></div>
+
+                                       <div class="form-group row">
+                                          <div class="col-8">
+                                    <fieldset>
+                                      <input name='email' placeholder="Your Email Address" type="email" tabindex="2" class="form-control here" required>
+                                    </fieldset>
+                                          </div></div>
+
+                                       <div class="form-group row">
+                                          <div class="col-8">
+                                    <fieldset>
+                                      <textarea name='message' placeholder="Type your message here...." tabindex="5" class="form-control here" required></textarea>
+                                    </fieldset>
+                                          </div></div>
+                                      <div class="form-group row">
+                                          <div class="offset-4 col-8">
+                                    <fieldset>
+                                      <button name="submit" type="submit" id="contact-submit" data-submit="...Sending" class="btn btn-primary" onclick="confirmation()">Submit</button>
+                                    </fieldset>
+                                          </div></div>
+                                  </form>
+                                </div>
+		                </div>
+		            </div>
+
+		        </div>
+		    </div>
+		</div>
+	</div>
+</div>
+
+{% endblock %}
