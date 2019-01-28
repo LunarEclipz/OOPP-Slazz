@@ -36,9 +36,11 @@ def transactions():
                 p = update_log.Update(name, amount)
                 p.amount = amount
                 p.name = name
+                p.color = "red"
             except:
                 p = update_log.topup(amount)
                 p.amount = amount
+                p.color = "green"
                 p.name = p.get_name()
             db = payment_data
             db.add_info('Bob', p)
@@ -51,10 +53,16 @@ def transactions():
 
 
 # Add Tab
-@app.route('/pay/add')
+@app.route('/pay/add', methods=['POST','GET'])
 def add():
-
-    return render_template("add.html", title="Add")
+    if request.method == 'POST':
+        db = payment_data
+        bdb = shelve.open('log.db')
+        return render_template("add.html", title="Add", db=db, bdb=bdb)
+    else:
+        db = payment_data
+        bdb = shelve.open('log.db')
+        return render_template("add.html", title="Add", db=db, bdb=bdb)
 
 if __name__ == '__main__':
     app.run(debug=True)

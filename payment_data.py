@@ -39,5 +39,8 @@ def add_info(username, log):
         db[userLog] = list1
     db.close()
 
+def delete_info(username, log):
+
+    db = shelve.open('log.db')
 
 

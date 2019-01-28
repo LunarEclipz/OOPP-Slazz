@@ -26,8 +26,8 @@
                     <tbody id="myTable">
                     {% for i in bdb['Bob']  %}
                     <tr>
-                        <td>{{ i.name }}</td>
-                        <td>{{ i.amount}}</td>
+                        <td style="color:{{i.color}}">{{ i.name }}</td>
+                        <td style="color:{{i.color}}">{{ i.amount}}</td>
                     </tr>
                     {% endfor %}
                     </tbody>
