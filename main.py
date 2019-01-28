@@ -1,5 +1,5 @@
 from flask import *
-from forms import SurveyForm, transfer_form, topup_form, LoginForm, RegisterForm
+from forms import *
 import data
 import activity
 from user import *
@@ -13,6 +13,7 @@ import Reminder
 import BookDatabase
 import payment_data
 import update_log
+import traveldata
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '5791628bb0b13ce0c676dfde280ba245'
@@ -146,6 +147,8 @@ def test_message():
     send_transferred_message('louisa', 100)
     return 'created test messages to louisa'
 
+
+# Main Tab
 @app.route('/pay')
 def pay():
     db = payment_data
@@ -153,11 +156,13 @@ def pay():
     return render_template('pay.html', title='Pay', db=db, bdb=bdb)
 
 
+# Top-up Tab
 @app.route('/pay/topup')
 def topup():
     db = payment_data
     bdb = shelve.open('log.db')
     return render_template("top_up.html", title="Top-Up", db=db, bdb=bdb)
+
 
 # Transaction Tab
 @app.route('/pay/transactions', methods=['POST', 'GET'])
@@ -178,7 +183,7 @@ def transactions():
                 p = update_log.topup(amount)
                 p.amount = amount
                 p.color = "green"
-                p.name = p.get_name()
+                p.name = session['username']
             db = payment_data
             db.add_info(session['username'], p)
             bdb = shelve.open('log.db')
@@ -200,6 +205,8 @@ def add():
         db = payment_data
         bdb = shelve.open('log.db')
         return render_template("add.html", title="Add", db=db, bdb=bdb)
+
+
 
 @app.route('/Finance')
 def Financehome():
@@ -406,6 +413,49 @@ def returnSubmit():
         db.deleteBook(session['username'], book)
         bdb = shelve.open('bookLoans.db')
         return render_template('ReturnSubmit.html', result=result, db=db, bdb=bdb)
+
+
+@app.route('/transport')
+def transport():
+    return render_template('transport.html')
+
+
+@app.route('/directions')
+def directions():
+    return render_template('directions.html')
+
+
+@app.route('/amenities', methods=('GET', 'POST'))
+def route():
+    return render_template('amenities.html')
+
+
+@app.route('/travels')
+def travels():
+    db = shelve.open('travel')
+    bdb = shelve.open('travel.db')
+    return render_template('travels.html', db=db, bdb=bdb)
+
+
+@app.route('/add_travel', methods=('GET', 'POST'))
+def add_travel():
+    form = TravelForm(request.form)
+    if request.method == 'POST' and form.validate():
+        start = form.start.data
+        destination = form.destination.data
+        fare = form.fare.data
+        date = form.date.data
+        a = traveldata.Travel()
+        a.destination = destination
+        a.start = start
+        a.fare = fare
+        a.date = date
+        db = traveldata
+        db.create_travel('Bob', a)
+        flash('Your travel has been added', 'success')
+        return redirect(url_for('travels'))
+    bdb = shelve.open('travel.db')
+    return render_template('add_travel.html', form=form, bdb=bdb)
 
 
 if __name__ == '__main__':
