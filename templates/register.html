@@ -1,8 +1,9 @@
 {% extends 'layout.html' %}
 
-{% block body %}
-  <h1>Register</h1>
-  <br>
+{% block content %}
+    <div class="jumbotron text-center">
+    <h1>REGISTER</h1>
+</div>
   {% from "_formhelpers.html" import render_field %}
   <form method="POST" action="">
     <div class="form-group">
@@ -20,4 +21,4 @@
     <br>
     <p><input type="submit" class="btn btn-warning" value="Submit"></p>
   </form>
-{% endblock %}
+{% endblock content %}

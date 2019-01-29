@@ -1,5 +1,105 @@
 {% extends 'layout_fin.html' %}
 {% block content %}
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script type="text/javascript">
+    google.charts.load('current', {packages: ['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+      // Define the chart to be drawn.
+             var data = google.visualization.arrayToDataTable([
+         ['Data', 'Amount', { role: 'style' }, { role: 'annotation' } ],
+        {% if session['username'] in bdb %}
+        {% for i in bdb[session['username']]  %}
+        {% if 0 <= i.food_b|float < 1 %}
+         ['Budget', parseInt({{i.food_b|float*400}}), 'green', 'Budget' ],
+         ['Expenditure', parseInt({{i.food_e}}), 'red', 'Expenditure' ],
+                 {% else %}
+                          ['Budget', parseInt({{i.food_b}}), 'green', 'Budget' ],
+         ['Expenditure', parseInt({{i.food_e}}), 'red', 'Expenditure' ],
+                         {% endif %}
+          {% endfor %}
+        {% endif %}
+      ]);
+      var chart = new google.visualization.ColumnChart(document.getElementById('foodie'));
+      chart.draw(data, null);
+    }
+  </script>
+
+  <script type="text/javascript">
+    google.charts.load('current', {packages: ['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+      // Define the chart to be drawn.
+             var data = google.visualization.arrayToDataTable([
+         ['Data', 'Amount', { role: 'style' }, { role: 'annotation' } ],
+        {% if session['username'] in bdb %}
+        {% for i in bdb[session['username']]  %}
+        {% if 0 <= i.leisure_b|float < 1 %}
+         ['Budget', parseInt({{i.leisure_b|float*400}}), 'green', 'Budget' ],
+         ['Expenditure', parseInt({{i.leisure_e}}), 'red', 'Expenditure' ],
+                 {% else %}
+                          ['Budget', parseInt({{i.leisure_b}}), 'green', 'Budget' ],
+         ['Expenditure', parseInt({{i.leisure_e}}), 'red', 'Expenditure' ],
+                         {% endif %}
+          {% endfor %}
+        {% endif %}
+      ]);
+      var chart = new google.visualization.ColumnChart(document.getElementById('leisureie'));
+      chart.draw(data, null);
+    }
+  </script>
+
+  <script type="text/javascript">
+    google.charts.load('current', {packages: ['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+      // Define the chart to be drawn.
+             var data = google.visualization.arrayToDataTable([
+         ['Data', 'Amount', { role: 'style' }, { role: 'annotation' } ],
+        {% if session['username'] in bdb %}
+        {% for i in bdb[session['username']]  %}
+        {% if 0 <= i.essen_b|float < 1 %}
+         ['Budget', parseInt({{i.essen_b|float*400}}), 'green', 'Budget' ],
+         ['Expenditure', parseInt({{i.essen_e}}), 'red', 'Expenditure' ],
+                 {% else %}
+                          ['Budget', parseInt({{i.essen_b}}), 'green', 'Budget' ],
+         ['Expenditure', parseInt({{i.essen_e}}), 'red', 'Expenditure' ],
+                         {% endif %}
+          {% endfor %}
+        {% endif %}
+      ]);
+      var chart = new google.visualization.ColumnChart(document.getElementById('essenie'));
+      chart.draw(data, null);
+    }
+  </script>
+
+  <script type="text/javascript">
+    google.charts.load('current', {packages: ['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+      // Define the chart to be drawn.
+             var data = google.visualization.arrayToDataTable([
+         ['Data', 'Amount', { role: 'style' }, { role: 'annotation' } ],
+        {% if session['username'] in bdb %}
+        {% for i in bdb[session['username']]  %}
+        {% if 0 <= i.others_b|float < 1 %}
+         ['Budget', parseInt({{i.others_b|float*400}}), 'green', 'Budget' ],
+         ['Expenditure', parseInt({{i.others_e}}), 'red', 'Expenditure' ],
+                 {% else %}
+                          ['Budget', parseInt({{i.others_b}}), 'green', 'Budget' ],
+         ['Expenditure', parseInt({{i.others_e}}), 'red', 'Expenditure' ],
+                         {% endif %}
+          {% endfor %}
+        {% endif %}
+      ]);
+      var chart = new google.visualization.ColumnChart(document.getElementById('otheris'));
+      chart.draw(data, null);
+    }
+  </script>
 
     <div class="jumbotron text-center">
         <h1>Advisor</h1>
@@ -7,6 +107,47 @@
 
     <div class="container-fluid text-center">
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+                <div class="container-fluid bg-grey text-center">
+                          {% if session['username'] in bdb %}
+        <h3>Results: </h3>
+        <table class="table">
+    <thead>
+        <tr>
+            <th>Food</th>
+            <th>Essentials</th>
+            <th>Leisure</th>
+            <th>Others</th>
+            <th>Total</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+                    {% for i in bdb[session['username']] %}
+            <td style="color:{{i.f_color}}">{{i.f_advise}}</td>
+            <td style="color:{{i.e_color}}">{{i.e_advise}}</td>
+            <td style="color:{{i.l_color}}">{{i.l_advise}}</td>
+            <td style="color:{{i.o_color}}">{{i.o_advise}}</td>
+            <td>You Saved ${{saved_total}}</td>
+                    {% endfor %}
+        </tr>
+        <tr>
+                    {% for i in bdb[session['username']] %}
+            <td><div id="foodie" style="width: 200px; height: 120px;" class="container-fluid text-center"></div></td>
+            <td><div id="essenie" style="width: 200px; height: 120px;" class="container-fluid text-center"></div></td>
+            <td><div id="leisureie" style="width: 200px; height: 120px;" class="container-fluid text-center"></div></td>
+            <td><div id="otheris" style="width: 200px; height: 120px;" class="container-fluid text-center"></div></td>
+            <td>''</td>
+                    {% endfor %}
+        </tr>
+
+
+
+    </tbody>
+    </table>
+                    <br><br>
+            {% endif %}
+                </div>
+
     <script type="text/javascript">
       google.charts.load("current", {packages:["corechart"]});
       google.charts.setOnLoadCallback(drawChart);
@@ -35,7 +176,30 @@
       }
     </script>
 <div id="donutchart" style="width: 900px; height: 500px;" class="container-fluid text-center"></div>
+    <div class="container-fluid text-center">
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script type="text/javascript">
+    google.charts.load('current', {packages: ['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
 
+    function drawChart() {
+      // Define the chart to be drawn.
+             var data = google.visualization.arrayToDataTable([
+         ['Month', 'Amount', { role: 'style' }, { role: 'annotation' } ],
+        {% if session['username'] in bdb %}
+        {% for i in bdb[session['username']]  %}
+         ['October', parseInt({{i.Oct}}), 'blue', 'Oct' ],
+         ['November', parseInt({{i.Nov}}), 'blue', 'Nov' ],
+         ['December', parseInt({{i.Dec}}), 'blue', 'Dec' ],
+         ['January', parseInt({{i.Jan}}), 'blue', 'Jan' ],
+          {% endfor %}
+        {% endif %}
+      ]);
+      var chart = new google.visualization.ColumnChart(document.getElementById('mySavingsChart'));
+      chart.draw(data, null);
+    }
+  </script>
+        <div id="mySavingsChart" ></div>
         <div class="container-fluid bg-grey text-center">
         <h3>Budgets Settings:</h3>
                {% if session['username'] in bdb %}
@@ -110,27 +274,8 @@
         {% endif %}
 
 
-        <h3>Results: </h3>
-        <table class="table">
-    <thead>
-        <tr>
-            <th>Food</th>
-            <th>Essentials</th>
-            <th>Leisure</th>
-            <th>Others</th>
-            <th>Total</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>You Saved ${{f_a}}</td>
-            <td>You Saved ${{e_a}}</td>
-            <td>You Saved ${{l_a}}</td>
-            <td>You Saved ${{o_a}}</td>
-            <td>You Saved ${{saved_total}}</td>
-        </tr>
-    </tbody>
-    </table>
+
+
     </div>
 
 

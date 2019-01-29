@@ -4,12 +4,9 @@
 {% block content %}
 {%  from "_formhelpers.html" import render_field %}
 
-<section class="content">
-  <header>
-
-  <h1>Log In</h1>
-  <br>
-  </header>
+    <div class="jumbotron text-center">
+    <h1>lOGIN</h1>
+</div>
   {% for message in get_flashed_messages() %}
     <div class="flash">{{ message }}</div>
   {% endfor %}
