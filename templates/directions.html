@@ -1,4 +1,5 @@
-
+{% extends "layout_transport.html" %}
+{% block content %}
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"  xmlns:v="urn:schemas-microsoft-com:vml">
 <head>
@@ -16,15 +17,21 @@
     </style>
 </head>
 <body>
-{% include 'translayout.html' %}
-    <div id="map" style="width:600px;height:600px;margin-right:20px;float:left;"></div>
-    <div class = "jumbotron" id="sidebar" style="width:300px;float:left;">
+    <div class="jumbotron text-center">
+        <h1>Directions</h1>
+    </div>
+
+    <div class = "container-fluid text-center">
+    <div class="col-sm-7" id="map" style="width:1100px;height:600px;"></div>
+    <div class="col-sm-3" id="sidebar">
         <form action="#" onsubmit="getDirections(this.from.value, this.to.value, this.mode.value);return false;">
             <p><label style="width:50px;display:inline-block;">From:</label><input type="text" size="34" name="from" value=""/></p>
             <p><label style="width:50px;display:inline-block;">To:</label><input type="text" size="34" name="to" value=""/></p>
-            <p><label style="width:50px;display:inline-block;">Via:</label><select name="mode"><option value="pt" selected=selected>Public Transport</option><option value="t">Taxi</option><option value="c">Car</option></select> <input type="submit" value="Get Directions" style="margin-left:25px"/></p>
+            <p><label style="width:50px;display:inline-block;">Via:</label><select name="mode"><option value="pt" selected=selected>Public Transport</option><option value="t">Taxi</option><option value="c">Car</option></select>
+                <input class="btn btn-warning" type="submit" value="Get Directions" style="margin-left:25px"/></p>
         </form>
-        <div id="panel"></div>
+    </div>
+    </div>
     <div>
     <script type="text/javascript" src="//gothere.sg/jsapi?sensor=false"></script>
     <script type="text/javascript">
@@ -65,5 +72,24 @@
 
         gothere.setOnLoadCallback(initialize);
     </script>
-</body>
-</html>
+
+            <script>
+$(document).on('click', '#abtt', function() {
+console.log('fire')
+window.location.href = window.location.origin + "/transportmain"
+})
+$(document).on('click', '#trav', function() {
+console.log('fire')
+window.location.href = window.location.origin + "/travels"
+})
+$(document).on('click', '#ame', function() {
+console.log('fire')
+window.location.href = window.location.origin + "/amenities"
+})
+$(document).on('click', '#loc', function() {
+console.log('fire')
+window.location.href = window.location.origin + "/transport"
+})
+</script>
+
+{% endblock %}

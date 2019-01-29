@@ -1,12 +1,13 @@
-{% extends 'layout.html' %}
+{% extends 'layout_lib.html' %}
 
-{% block body %}
-<div class="container">
-    <div class="page-header">
-        Book submit success!
-    </div>
-<h3>Current Loans</h3>
-    <table border="1" cellpadding="3">
+{% block content %}
+<div class="jumbotron text-center">
+    <h1> Book submit success! </h1>
+</div>
+
+<div class="container-fluid text-center">
+<h2>Current Loans</h2>
+    <table class="table">
     <thead>
         <tr>
             <th>Title of Book</th>
@@ -26,8 +27,11 @@
         {% endfor %}
     </tbody>
     </table>
-<h3>Log of All Loans (Current and Previous loans)</h3>
-    <table border="1" cellpadding="3">
+</div>
+
+<div class="container-fluid text-center bg-grey">
+<h2>Log of All Loans (Current and Previous loans)</h2>
+    <table class="table">
     <thead>
         <tr>
             <th>Title of Book</th>
@@ -45,6 +49,30 @@
         {% endfor %}
     </tbody>
     </table>
-    <button><a href="{{ url_for('loaned') }}">Back to Books On Loan</a></button>
+    <button class="btn btn-warning" ><a href="{{ url_for('loaned') }}">Back to Books On Loan</a></button>
 </div>
+</div>
+
+    <script>
+        $(document).on('click', '#abtL', function() {
+            console.log('fire')
+            window.location.href = window.location.origin + "/Library"
+        })
+        $(document).on('click', '#recL', function() {
+            console.log('fire')
+            window.location.href = window.location.origin + "/RecommendedBooks"
+        })
+        $(document).on('click', '#payL', function() {
+            console.log('fire')
+            window.location.href = window.location.origin + "/Payment"
+        })
+        $(document).on('click', '#onL', function() {
+            console.log('fire')
+            window.location.href = window.location.origin + "/BooksOnLoan"
+        })
+        $(document).on('click', '#remL', function() {
+            console.log('fire')
+            window.location.href = window.location.origin + "/Reminders"
+        })
+    </script>
 {% endblock %}

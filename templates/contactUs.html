@@ -1,19 +1,9 @@
 {% extends 'layout.html' %}
-<head>
-    <meta charset="UTF-8">
-    <title>Profile</title>
+{% block content %}
 
-        <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-        <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
-        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-
-
-</head>
-{% block body %}
-
-
+<div class="jumbotron text-center">
+    <h1>Contact Us</h1>
+</div>
 <script>
 
 function confirmation() {
@@ -49,29 +39,29 @@ function confirmation() {
                                     <h5>Any comments or issues you would like to be clarified with do write to us</h5>
                                       <div class="form-group row">
                                           <div class="col-8">
-                                    <fieldset>
+
                                       <input name='id' placeholder="Your Username" type="text" tabindex="1" class="form-control here" required autofocus>
-                                    </fieldset>
-                                          </div></div>
+
+                                          </div>
+                                      </div>
 
                                        <div class="form-group row">
                                           <div class="col-8">
-                                    <fieldset>
+
                                       <input name='email' placeholder="Your Email Address" type="email" tabindex="2" class="form-control here" required>
-                                    </fieldset>
-                                          </div></div>
+
+                                          </div>
+                                       </div>
 
                                        <div class="form-group row">
                                           <div class="col-8">
-                                    <fieldset>
                                       <textarea name='message' placeholder="Type your message here...." tabindex="5" class="form-control here" required></textarea>
-                                    </fieldset>
-                                          </div></div>
+                                          </div>
+                                       </div>
+
                                       <div class="form-group row">
                                           <div class="offset-4 col-8">
-                                    <fieldset>
                                       <button name="submit" type="submit" id="contact-submit" data-submit="...Sending" class="btn btn-primary" onclick="confirmation()">Submit</button>
-                                    </fieldset>
                                           </div></div>
                                   </form>
                                 </div>
@@ -84,4 +74,4 @@ function confirmation() {
 	</div>
 </div>
 
-{% endblock %}
+{% endblock content%}

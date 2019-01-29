@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    {% if title%}
+    <title> Slazz - {{ title }}</title>
+    {% else %}
+    <title> Slazz</title>
+    {% endif %}
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
@@ -8,11 +13,6 @@
   <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-    {% if title %}
-    <title> SLAZZ - {{ title }} </title>
-    {% else %}
-    <title> SLAZZ </title>
-    {% endif %}
   <style>
   body {
     font: 400 15px Lato, sans-serif;
@@ -34,7 +34,7 @@
     margin-bottom: 30px;
   }
   .jumbotron {
-    background-color: #00b33c;
+    background-color: #005ce6;
     color: #fff;
     padding: 100px 25px;
     font-family: Montserrat, sans-serif;
@@ -46,16 +46,16 @@
     background-color: #f6f6f6;
   }
   .logo-small {
-    color: #00b33c;
+    color: #005ce6;
     font-size: 50px;
   }
   .logo {
-    color: #00b33c;
+    color: #005ce6;
     font-size: 200px;
   }
   .navbar {
     margin-bottom: 0;
-    background-color: #00b33c;
+    background-color: #005ce6;
     z-index: 9999;
     border: 0;
     font-size: 12px !important;
@@ -68,7 +68,7 @@
     color: #fff !important;
   }
   .navbar-nav li a:hover, .navbar-nav li.active a {
-    color: #00b33c !important;
+    color: #005ce6 !important;
     background-color: #fff !important;
   }
   .navbar-default .navbar-toggle {
@@ -78,7 +78,7 @@
   footer .glyphicon {
     font-size: 20px;
     margin-bottom: 20px;
-    color: #00b33c;
+    color: #005ce6;
   }
   .slideanim {visibility:hidden;}
   .slide {
@@ -140,16 +140,16 @@
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav navbar-right">
           <li><a href="/" id="home">HOME</a></li>
-        <li><a href="#about" id="abtp">ABOUT</a></li>
-        <li><a href="#pay" id="ezlink">PAY</a></li>
-        <li><a href="#topup" id="top">TOP-UP</a></li>
-        <li><a href="#transaction" id="tra">TRANSACTION</a></li>
+        <li><a href="#about" id="abtL">ABOUT</a></li>
+        <li><a href="#onloan" id="onL">ON LOAN</a></li>
+        <li><a href="#payment" id="payL">PAYMENT</a></li>
+        <li><a href="#recommended" id="recL">RECOMMENDED</a></li>
+        <li><a href="#reminders" id="remL">REMINDERS</a></li>
       </ul>
     </div>
   </div>
 </nav>
-
-    {% block content %} {% endblock %}
+{% block content%}{% endblock %}
 
 <script>
 $(document).ready(function(){
@@ -190,3 +190,6 @@ $(document).ready(function(){
 
 </body>
 </html>
+
+
+

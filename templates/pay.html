@@ -1,50 +1,43 @@
 {% extends "zlayout.html" %}
 {% block content %}
-<div class="container">
-        <ul class="nav nav-tabs">
-            <li class="active"><a data-toggle="tab" href="#pay"><span class="glyphicon glyphicon-usd"> PAY </span></a></li>
-            <li><a data-toggle="tab" href="#top-up" id="top-up"><span class="glyphicon glyphicon-send"> TOP-UP </span></a></li>
-            <li><a data-toggle="tab" href="#transactions" id="transactions"><span class="glyphicon glyphicon-piggy-bank"> TRANSACTIONS </span></a></li>
-            <li><a data-toggle="tab" href="#add" id="add"><span class="glyphicon glyphicon-plus-sign"> ADD </span></a></li>
-        </ul>
+<div class="jumbotron text-center">
+  <h1>PAY</h1>
+</div>
 
-    <div class="tab-content">
-      <div id="pay" class="tab-pane in active">
-        <h3> Pay </h3>
-          <div class="container">
-              <div class="content-section">
-                  <div class="form-group">
-                    <form method="POST" action="{{ url_for('transactions') }}">
-                    <div class="form-group">
+<div class="container-fluid text-center">
+    <h1>Pay by EZlink</h1>
+</div>
 
-                        <h2>Ezlink Payment</h2>
-                        <label for="name">Payee</label> <br>
-                        <input type="text" id="name" name="name" required><br>
+  <div class="container-fluid text-center bg-grey">
+      <div class="form-group">
+        <form method="POST" action="{{ url_for('transactions') }}">
+        <div class="form-group">
+            <label for="name">Payee</label> <br>
+            <input type="text" id="name" name="name" required><br>
 
-                        <label for="amount">Amount</label> <br>
-                        <input type="text" id="amount" name="amount" required><br>
+            <label for="amount">Amount</label> <br>
+            <input type="text" id="amount" name="amount" required><br>
 
-                    </div>
-                        <input id='logSubmit' type="submit" value='Send' class="btn btn-warning">
-                    </form>
-              </div>
-          </div>
-      </div>
+        </div>
+            <input id='logSubmit' type="submit" value='Send' class="btn btn-warning">
+        </form>
+  </div>
+</div>
+</div>
 
 
-    <script>
-        $(document).on('click', '#top-up', function() {
-            console.log('fire')
-            window.location.href = window.location.origin + "/pay/topup"
-        })
-        $(document).on('click', '#transactions', function() {
-            console.log('fire')
-            window.location.href = window.location.origin + "/pay/transactions"
-        })
-        $(document).on('click', '#add', function() {
-            console.log('fire')
-            window.location.href = window.location.origin + "/pay/add"
-        })
-    </script>
+<script>
+$(document).on('click', '#top', function() {
+console.log('fire')
+window.location.href = window.location.origin + "/topup"
+})
+$(document).on('click', '#tra', function() {
+console.log('fire')
+window.location.href = window.location.origin + "/transaction"
+})
+$(document).on('click', '#abtp', function() {
+console.log('fire')
+window.location.href = window.location.origin + "/paymain"
+})
+</script>
 {% endblock content %}
-

@@ -1,10 +1,12 @@
-{% extends 'translayout.html' %}
+{% extends "layout_transport.html" %}
+{% block content %}
+    <div class="jumbotron text-center">
+        <h1>Add Travel</h1>
+    </div>
 
-{% block body %}
-  <h1>Add Travel</h1>
-  <br>
   {% from "_formhelpers.html" import render_field %}
-  <div class = "jumbotron">
+  <div class = "container-fluid text-center">
+  <div class="form-group">
     <form method="POST" action="">
         <div class="form-group">
           {{render_field(form.start, class_="form-control")}}
@@ -22,4 +24,29 @@
         <p><input type="submit" class="btn btn-warning" value="Submit"></p>
     </form>
   </div>
+  </div>
+
+    <script>
+$(document).on('click', '#abtt', function() {
+console.log('fire')
+window.location.href = window.location.origin + "/transportmain"
+})
+$(document).on('click', '#trav', function() {
+console.log('fire')
+window.location.href = window.location.origin + "/travels"
+})
+$(document).on('click', '#ame', function() {
+console.log('fire')
+window.location.href = window.location.origin + "/amenities"
+})
+$(document).on('click', '#dir', function() {
+console.log('fire')
+window.location.href = window.location.origin + "/directions"
+})
+$(document).on('click', '#loc', function() {
+console.log('fire')
+window.location.href = window.location.origin + "/transport"
+})
+</script>
+
 {% endblock %}

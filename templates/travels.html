@@ -1,13 +1,15 @@
-{% include 'translayout.html' %}
-{% block body %}
-<div class="container">
-    <div class = 'jumbotron text-center'>
+{%extends "layout_transport.html" %}
+{% block content %}
+ <div class="jumbotron text-center">
+        <h1>Travels</h1>
+    </div>
+
+<div class = "container-fluid text-center">
         <h1> Your Recent Travels</h1>
         <a class="btn btn-warning" href = "{{ url_for('add_travel') }}">Add Travel</a>
     </div>
 </div>
-<div class="container">
-    <div class = 'jumbotron'>
+<div class = "container-fluid bg-grey text-center">
         <table class="table table-striped">
             <tr>
               <th>Start</th>
@@ -25,5 +27,24 @@
             {% endfor %}
         </table>
     </div>
-</div>
+
+    <script>
+$(document).on('click', '#abtt', function() {
+console.log('fire')
+window.location.href = window.location.origin + "/transportmain"
+})
+$(document).on('click', '#dir', function() {
+console.log('fire')
+window.location.href = window.location.origin + "/directions"
+})
+$(document).on('click', '#ame', function() {
+console.log('fire')
+window.location.href = window.location.origin + "/amenities"
+})
+$(document).on('click', '#loc', function() {
+console.log('fire')
+window.location.href = window.location.origin + "/transport"
+})
+</script>
+
 {% endblock %}

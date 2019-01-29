@@ -1,41 +1,84 @@
-{% extends 'Layout.html' %}
+{% extends 'layout_lib.html' %}
+{% block content %}
 
-{% block body %}
-<div class="container">
-    <div class="page-header">
-        <h1 id="libraryHeader">Library</h1>
-    </div>
-    <div class="jumbotron">
-        <div class="slider1">
-        <h3>Welcome to the Library!</h3>
-        <p>Recommended Books, Reminders, and Payment services available</p>
-        </div>
-        <h2>What is Library about?</h2>
-    <p>Library is an system designed to relieve book lovers of the pain of scouring the web to find a good read, to give
-    a wake up call when a book is near is due date, and to give the gift of convenience by simplifying payment of overdue
-    fines to a tap of your finger.</p>
-    </div>
-
-       <div class="slider2">
-        <h3>Books currently on loan</h3>
-        <p>What you have borrowed and renewal services.</p>
-        <a id="borrowedBooksPageButton" href="{{ url_for('loaned') }}" class="btn btn-danger btn-lg" role="button">Click here</a>
-    </div>
-    <div class="slider2">
-        <h3>Recommended books</h3>
-        <p>Based on your recent reads</p>
-        <a id="recBooksPageButton" href="{{ url_for('recBooks') }}" class="btn btn-primary btn-lg" role="button">Click here</a>
-    </div>
-    <div class="slider3">
-        <h3>Reminders</h3>
-        <p>Never get fined again!</p>
-        <a id="remindersPageButton" href="{{ url_for('reminders') }}" class="btn btn-warning btn-lg" role="button">Click here</a>
-    </div>
-    <div class="slider4">
-        <h3>Payment</h3>
-        <p>Simply pay your outstanding balance with a tap!</p>
-        <a id="paymentPageButton" href="{{ url_for('payment') }}" class="btn btn-danger btn-lg" role="button">Click here</a>
-    </div>
-
+<div class="jumbotron text-center">
+  <h1>Welcome to Library!</h1>
 </div>
+
+<!-- Container (About Section) -->
+<div id="about" class="container-fluid text-center">
+  <div class="row">
+    <div class="col-sm-8">
+      <h2>About Library</h2><br>
+      <h4>Library is system designed to relieve book lovers the pain of scouring through the web to find a good read, to give a wake up call when a book is near the due date. Lastly, it is to give the gift of convenience by simplifying the payment process for overdue fines with a tap of your finger.</h4><br>
+    </div>
+    <div class="col-sm-4">
+      <span class="glyphicon glyphicon-book logo"></span>
+    </div>
+  </div>
+</div>
+
+
+<!-- Container (On Loan Section) -->
+<div id="onloan" class="container-fluid text-center bg-grey">
+  <h2>On Loan</h2>
+  <div class="row slideanim">
+    <div class="col-sm-4">
+		<span class="glyphicon glyphicon-bookmark logo"></span>
+    </div>
+    <div class="col-sm-8">
+      <h4> What you have borrowed and renewal services.</h4>
+      <a id="borrowedBooksPageButton" href="{{ url_for('loaned') }}" class="btn btn-warning btn-lg" role="button">Click here</a>
+    </div>
+  </div>
+</div>
+
+<!-- Container (Payment Section) -->
+<div id="payment" class="container-fluid text-center">
+  <h2>Payment</h2>
+  <div class="row slideanim">
+    <div class="col-sm-8">
+      <h4> Simply pay your outstanding balance with a tap!</h4>
+      <a id="paymentPageButton" href="{{ url_for('payment') }}" class="btn btn-warning btn-lg" role="button">Click here</a>
+    </div>
+        <div class="col-sm-4">
+		<span class="glyphicon glyphicon-barcode logo"></span>
+    </div>
+  </div>
+</div>
+
+<!-- Container (Recommended Section) -->
+<div id="recommended" class="container-fluid text-center bg-grey">
+  <h2>Recommended</h2>
+  <div class="row slideanim">
+    <div class="col-sm-4">
+		<span class="glyphicon glyphicon-thumbs-up logo"></span>
+    </div>
+    <div class="col-sm-8">
+      <h4>Based on your recent reads.</h4>
+      <a id="recBooksPageButton" href="{{ url_for('recBooks') }}" class="btn btn-warning btn-lg" role="button">Click here</a>
+    </div>
+  </div>
+</div>
+
+<!-- Container (Reminders Section) -->
+<div id="reminders" class="container-fluid text-center">
+  <h2>Reminders</h2>
+  <div class="row slideanim">
+    <div class="col-sm-8">
+      <h4>Never get fined again!</h4>
+      <a id="remindersPageButton" href="{{ url_for('reminders') }}" class="btn btn-warning btn-lg" role="button">Click here</a>
+    </div>
+    <div class="col-sm-4">
+		<span class="glyphicon glyphicon-bullhorn logo"></span>
+    </div>
+  </div>
+</div>
+
+<footer class="container-fluid text-center">
+  <a href="#myPage" title="To Top">
+    <span class="glyphicon glyphicon-chevron-up"></span>
+  </a>
+</footer>
+
 {% endblock %}

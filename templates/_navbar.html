@@ -13,11 +13,11 @@
           <ul class="nav navbar-nav navbar-right">
             {% if session.logged_in %}
 
-              <li><a href="{{ url_for('transactions') }}">Pay</a></li>
+              <li><a href="/paymain">Pay</a></li>
               <li><a href="/Finance">Finance</a></li>
               <li><a href="/Library">Your Library</a></li>
               <li><a href="/profile">Profile Page</a></li>
-              <li><a href="/transport">Transport</a></li>
+              <li><a href="/transportmain">Transport</a></li>
               <li><a href="/logout">Logout</a></li>
             {% else %}
               <li><a href="/register">Register</a></li>

@@ -1,13 +1,37 @@
-{% extends 'Layout.html' %}
-{% block body %}
-    <div class="page-header">
+{% extends 'layout_lib.html' %}
+{% block content %}
+
+    <div class="container-fluid text-center">
     <h1>Reminder for {{ result['books'] }} set!</h1>
     </div>
     <div class="jumbotron">
-        <p>Book title: {{ result['books'] }}</p>
-        <p>Date of Reminder: {{ result['RemindDate'] }}</p>
+        <h2>Book title: {{ result['books'] }}</h2>
+        <h2>Date of Reminder: {{ result['RemindDate'] }}</h2>
     </div>
     <div class="footer">
-    <button><a href="{{ url_for('reminders') }}">Back to Reminders</a> </button>
+    <button class="btn btn-warning"><a href="{{ url_for('reminders') }}">Back to Reminders</a> </button>
     </div>
+
+     <script>
+        $(document).on('click', '#abtL', function() {
+            console.log('fire')
+            window.location.href = window.location.origin + "/Library"
+        })
+        $(document).on('click', '#recL', function() {
+            console.log('fire')
+            window.location.href = window.location.origin + "/RecommendedBooks"
+        })
+        $(document).on('click', '#payL', function() {
+            console.log('fire')
+            window.location.href = window.location.origin + "/Payment"
+        })
+        $(document).on('click', '#onL', function() {
+            console.log('fire')
+            window.location.href = window.location.origin + "/BooksOnLoan"
+        })
+        $(document).on('click', '#remL', function() {
+            console.log('fire')
+            window.location.href = window.location.origin + "/Reminders"
+        })
+    </script>
 {% endblock %}

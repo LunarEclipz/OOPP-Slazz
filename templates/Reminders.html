@@ -1,12 +1,15 @@
-{% extends 'Layout.html' %}
+{% extends 'layout_lib.html' %}
+{% block content %}
 
-{% block body %}
-<div class="container">
-    <div class="page-header">
-    <h1 id="remindersHeader">Reminders</h1>
-    </div>
+<div class="jumbotron text-center">
+    <h1>Reminders</h1>
+</div>
+
+<div class="container-fluid text-center">
+    <h1>Set reminders for your books here. We will inform you with a notification and/or email.</h1>
+</div>
+    <div class="container">
     <div class="jumbotron">
-    <p>Set reminders for your books here. We will inform you with a notification and/or email.</p>
     {% if 'Bob' in bdb.keys() %}
     <form method="POST" action="{{ url_for('reminderSubmit') }}">
         Title of Book:<br>
@@ -14,7 +17,7 @@
             {% for i in bdb['Bob'] %}
             <option value="{{ i.title }}">{{ i.title }}</option>
             {% endfor %}
-        </select><br>
+        </select>
         <label for="RemindDate">Date of reminder:</label><br>
         <input id="RemindDate" name="RemindDate" type="date" value="{{ books.today_date() }}"
                min="{{ books.today_date() }}" required><br>
@@ -45,6 +48,25 @@
     {% endif %}
 
     </div>
-
 </div>
+
+
+    <script>
+        $(document).on('click', '#abtL', function() {
+            console.log('fire')
+            window.location.href = window.location.origin + "/Library"
+        })
+        $(document).on('click', '#recL', function() {
+            console.log('fire')
+            window.location.href = window.location.origin + "/RecommendedBooks"
+        })
+        $(document).on('click', '#payL', function() {
+            console.log('fire')
+            window.location.href = window.location.origin + "/Payment"
+        })
+        $(document).on('click', '#onL', function() {
+            console.log('fire')
+            window.location.href = window.location.origin + "/BooksOnLoan"
+        })
+    </script>
 {% endblock %}

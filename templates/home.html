@@ -1,15 +1,26 @@
 {% extends 'layout.html' %}
+{% block content %}
 
-{% block body %}
 
 
-  <div class="jumbotron text-center">
-    {% include 'carousel.html' %}
-    <br>
-    <h1>Welcome To SLAZZ</h1>
-    <p class="lead">Do more with your EZLink Card</p>
-    {% if session.logged_in == NULL %}
-      <a href="/register" class="btn btn-warning btn-lg">Sign Up Now!</a>
-    {% endif %}
+<div id="about" class="container-fluid">
+  <div class="row">
+   {% include 'carousel.html' %}
   </div>
-{% endblock %}
+</div>
+
+
+
+<!-- Container (About Section) -->
+<div id="about" class="container-fluid">
+  <div class="row">
+    <div class="col-sm-8">
+      <h2>About Us</h2><br>
+      <h4>Everyone, from Primary school students to Adults in Singapore have an Ezlink card, which actually has many uses, including Transport, for borrowing books in the library, and we can even use our Ezlink cards to pay for items. Our aim is to increase the use of Ezlink cards in everyone's daily lives since we all have it.</h4><br>
+    </div>
+    <div class="col-sm-4">
+      <span class="glyphicon glyphicon-user logo"></span>
+    </div>
+  </div>
+</div>
+{% endblock content %}

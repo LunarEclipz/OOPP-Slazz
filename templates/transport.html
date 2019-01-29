@@ -1,8 +1,7 @@
-<!DOCTYPE html>
-<html>
+{% extends "layout_transport.html" %}
+{% block content %}
+
 <head>
-    <meta charset='utf-8' />
-    <title>Your Location</title>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
     <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.52.0/mapbox-gl.js'></script>
     <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.52.0/mapbox-gl.css' rel='stylesheet' />
@@ -12,7 +11,9 @@
     </style>
 </head>
 <body>
-{% include 'translayout.html' %}
+    <div class="jumbotron text-center">
+        <h1>Location</h1>
+    </div>
 <div id='map'></div>
 
 <script>
@@ -33,5 +34,23 @@ map.addControl(new mapboxgl.GeolocateControl({
 }));
 </script>
 
-</body>
-</html>
+<script>
+$(document).on('click', '#abtt', function() {
+console.log('fire')
+window.location.href = window.location.origin + "/transportmain"
+})
+$(document).on('click', '#trav', function() {
+console.log('fire')
+window.location.href = window.location.origin + "/travels"
+})
+$(document).on('click', '#ame', function() {
+console.log('fire')
+window.location.href = window.location.origin + "/amenities"
+})
+$(document).on('click', '#dir', function() {
+console.log('fire')
+window.location.href = window.location.origin + "/directions"
+})
+</script>
+
+{% endblock content %}
