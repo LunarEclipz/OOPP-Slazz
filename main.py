@@ -27,11 +27,6 @@ def home():
     return render_template('home.html')
 
 
-@app.route('/about')
-def about():
-    return render_template('about.html')
-
-
 #User Login
 @app.route('/login',  methods=('GET', 'POST'))
 def login():
@@ -147,8 +142,13 @@ def test_message():
     send_transferred_message('louisa', 100)
     return 'created test messages to louisa'
 
+# Main Pay Tab
+@app.route('/paymain')
+def paymain():
+    return render_template('pay_main.html', title='Pay Main')
 
-# Main Tab
+
+# Pay Tab
 @app.route('/pay')
 def pay():
     db = payment_data
@@ -157,7 +157,7 @@ def pay():
 
 
 # Top-up Tab
-@app.route('/pay/topup')
+@app.route('/topup')
 def topup():
     db = payment_data
     bdb = shelve.open('log.db')
@@ -165,7 +165,7 @@ def topup():
 
 
 # Transaction Tab
-@app.route('/pay/transactions', methods=['POST', 'GET'])
+@app.route('/transaction', methods=['POST', 'GET'])
 def transactions():
     db = payment_data
     bdb = shelve.open('log.db')
@@ -183,29 +183,15 @@ def transactions():
                 p = update_log.topup(amount)
                 p.amount = amount
                 p.color = "green"
-                p.name = session['username']
+                p.name = p.get_name()
             db = payment_data
-            db.add_info(session['username'], p)
+            db.add_info('Bob', p)
             bdb = shelve.open('log.db')
             return render_template("transactions.html", title="Transactions", result=result, db=db, bdb=bdb)
     except:
         db = payment_data
         bdb = shelve.open('log.db')
     return render_template("transactions.html", title="Transactions", db=db, bdb=bdb)
-
-
-# Add Tab
-@app.route('/pay/add', methods=['POST','GET'])
-def add():
-    if request.method == 'POST':
-        db = payment_data
-        bdb = shelve.open('log.db')
-        return render_template("add.html", title="Add", db=db, bdb=bdb)
-    else:
-        db = payment_data
-        bdb = shelve.open('log.db')
-        return render_template("add.html", title="Add", db=db, bdb=bdb)
-
 
 
 @app.route('/Finance')
@@ -414,6 +400,9 @@ def returnSubmit():
         bdb = shelve.open('bookLoans.db')
         return render_template('ReturnSubmit.html', result=result, db=db, bdb=bdb)
 
+@app.route('/transportmain')
+def transportmain():
+    return render_template('transport_main.html')
 
 @app.route('/transport')
 def transport():
