@@ -179,11 +179,13 @@ def transactions():
                 p.amount = amount
                 p.name = name
                 p.color = "red"
+                send_spent_message(session['username'], p.amount)
             except:
                 p = update_log.topup(amount)
                 p.amount = amount
                 p.color = "green"
                 p.name = p.get_name()
+                send_transferred_message(session['username'], p.amount)
             db = payment_data
             db.add_info('Bob', p)
             bdb = shelve.open('log.db')
@@ -242,8 +244,25 @@ def Advisor():
         l_a = db.get_advise(a.leisure_b, a.leisure_e)
         e_a = db.get_advise(a.essen_b, a.essen_e)
         o_a = db.get_advise(a.others_b, a.others_e)
+        db.clear_budgets(session['username'])
+        a = data.self_Settings()
+        a.food_b = food_b
+        a.leisure_b = leisure_b
+        a.others_b = others_b
+        a.essen_b = essen_b
+        colorvise = db.get_colorvise('', f_a, '', e_a, '', o_a, '', l_a)
+        a.f_color = colorvise[0]
+        a.f_advise = colorvise[1]
+        a.e_color = colorvise[2]
+        a.e_advise = colorvise[3]
+        a.o_color = colorvise[4]
+        a.o_advise = colorvise[5]
+        a.l_color = colorvise[6]
+        a.l_advise = colorvise[7]
+        db.update_budget(session['username'], a)
+        bdb = shelve.open('budget.db')
         saved_total = a.total - a.food_e - a.others_e - a.essen_e - a.leisure_e
-        return render_template("Advisor.html", title='Advisor', result=result, db=db, bdb=bdb, f_a=f_a, l_a=l_a, e_a=e_a, o_a=o_a, saved_total=saved_total)
+        return render_template("Advisor.html", title='Advisor', result=result, db=db, bdb=bdb, saved_total=saved_total)
     else:
         a = data.Default()
         db = data
@@ -253,8 +272,21 @@ def Advisor():
         l_a = db.get_advise(a.leisure_b, a.leisure_e)
         e_a = db.get_advise(a.essen_b, a.essen_e)
         o_a = db.get_advise(a.others_b, a.others_e)
+        db.clear_budgets(session['username'])
+        colorvise = db.get_colorvise('', f_a, '', e_a, '', o_a, '', l_a)
+        a = data.Default()
+        a.f_color = colorvise[0]
+        a.f_advise = colorvise[1]
+        a.e_color = colorvise[2]
+        a.e_advise = colorvise[3]
+        a.o_color = colorvise[4]
+        a.o_advise = colorvise[5]
+        a.l_color = colorvise[6]
+        a.l_advise = colorvise[7]
+        db.update_budget(session['username'], a)
+        bdb = shelve.open('budget.db')
         saved_total = a.total - a.food_e - a.others_e - a.essen_e - a.leisure_e
-        return render_template("Advisor.html", title='Advisor', db=db, bdb=bdb, f_a=f_a, l_a=l_a, e_a=e_a, o_a=o_a, saved_total=saved_total)
+        return render_template("Advisor.html", title='Advisor', db=db, bdb=bdb, saved_total=saved_total)
 
 
 @app.route('/Activity')

@@ -33,11 +33,11 @@ def get_message(receiver):
     return l
 
 def send_transferred_message(receiver, amount):
-    message = str(amount) + ' has been transferred to your account'
+    message = '     ' + str(amount) + ' has been transferred to your account    '
     send_message(receiver, message)
 
 def send_spent_message(receiver, amount):
-    spentMessage = 'You have spent ' + str(amount) + 'from your account'
+    spentMessage = 'You have spent      ' + str(amount) + ' from your account    '
     send_message(receiver, spentMessage)
 
 

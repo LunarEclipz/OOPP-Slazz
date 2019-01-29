@@ -90,13 +90,25 @@ class Budget:
 
 class Default(Budget):
 
-    def __init__(self, food_b=0.2, leisure_b=0.4, essen_b=0.3, others_b=0.1, food_e=50, leisure_e=30, essen_e=25, others_e=10, total=400, type='Default', Oct='30', Nov='20', Dec='10', Jan='50'):
+    def __init__(self, food_b=0.2, leisure_b=0.4, essen_b=0.3, others_b=0.1, food_e=50, leisure_e=30, essen_e=25, \
+                 others_e=10, total=400, type='Default', Oct='30', Nov='20', Dec='10', Jan='285', f_color='', f_advise=''\
+                 , e_color='', e_advise='', l_color='', l_advise='', o_color='', o_advise=''):
         super().__init__(food_b, leisure_b, essen_b, others_b, food_e, leisure_e, essen_e, others_e, total)
         self.type = type
         self.Oct = Oct
         self.Nov = Nov
         self.Dec = Dec
         self.Jan = Jan
+        self.f_color = f_color
+        self.f_advise = f_advise
+        self.l_color = l_color
+        self.l_advise = l_advise
+        self.o_color = o_color
+        self.o_advise = o_advise
+        self.e_color = e_color
+        self.e_advise = e_advise
+
+
 
     def get_type(self):
         return self.type
@@ -104,13 +116,23 @@ class Default(Budget):
 
 class self_Settings(Budget):
 
-    def __init__(self, food_b='', leisure_b='', essen_b='', others_b='', food_e=50, leisure_e=30, essen_e=25, others_e=10, total=400, type='Self Settings', Oct='30', Nov='20', Dec='10', Jan='50'):
+    def __init__(self, food_b='', leisure_b='', essen_b='', others_b='', food_e=50, leisure_e=30, essen_e=25,\
+                 others_e=10, total=400, type='Self Settings', Oct='30', Nov='20', Dec='10', Jan='285',\
+                 f_color='', f_advise='', e_color='', e_advise='', l_color='', l_advise='', o_color='', o_advise=''):
         super().__init__(food_b, leisure_b, essen_b, others_b, food_e, leisure_e, essen_e, others_e, total)
         self.type = type
         self.Oct = Oct
         self.Nov = Nov
         self.Dec = Dec
         self.Jan = Jan
+        self.f_color = f_color
+        self.f_advise = f_advise
+        self.l_color = l_color
+        self.l_advise = l_advise
+        self.o_color = o_color
+        self.o_advise = o_advise
+        self.e_color = e_color
+        self.e_advise = e_advise
 
     def get_type(self):
         return self.type
@@ -127,7 +149,35 @@ def get_advise(budget, expenditure):
         value = budget - expenditure
     return value
 
-#
+
+def get_colorvise(f_c, f_a, e_c, e_a, o_c, o_a, l_c, l_a):
+    if f_a < 0:
+        f_c = 'red'
+        f_a = 'You lost $' + str(f_a) + ' for food and beverages. Save More!'
+    else:
+        f_c = 'green'
+        f_a = 'You gained $' + str(f_a) + ' for food and beverages. You Saved Well!'
+    if e_a < 0:
+        e_c = 'red'
+        e_a = 'You lost $' + str(e_a) + ' for essentials. Save More!'
+    else:
+        e_c = 'green'
+        e_a = 'You gained $' + str(e_a) + ' for essentials. You Saved Well!'
+    if o_a < 0:
+        o_c = 'red'
+        o_a = 'You lost $' + str(o_a) + ' for others. Save More!'
+    else:
+        o_c = 'green'
+        o_a = 'You gained $' + str(o_a) + ' for others. You Saved Well!'
+    if l_a < 0:
+        l_c = 'red'
+        l_a = 'You lost $' + str(l_a) + ' for leisure. Save More!'
+    else:
+        l_c = 'green'
+        l_a = 'You gained $' + str(l_a) + ' for leisure. You Saved Well!'
+    return f_c, f_a, e_c, e_a, o_c, o_a, l_c, l_a
+
+
 # def update_Savings(username, Savings):
 #     db = shelve.open('budget.db')
 #     userLog = username + 'Savings'
