@@ -184,7 +184,7 @@ def transactions():
                 p = update_log.topup(amount)
                 p.amount = amount
                 p.color = "green"
-                p.name = p.get_name()
+                p.name = session['username']
                 send_transferred_message(session['username'], p.amount)
             db = payment_data
             db.add_info('Bob', p)
@@ -225,7 +225,6 @@ def Spending():
 def Advisor():
     db = data
     bdb = shelve.open('budget.db')
-    db.clear_budgets(session['username'])
     if request.method == 'POST':
         result = request.form
         food_b = result['food_b']
